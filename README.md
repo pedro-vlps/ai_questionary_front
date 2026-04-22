@@ -1,36 +1,70 @@
-# Versioning Template
+# Getting Started with Create React App
 
-A repository created to simplify project versioning and commits generation
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-*Warning: This script work only on Windows*
+## Available Scripts
 
-## Script usage
+In the project directory, you can run:
 
-You just need to run the script typing its name in PowerShell
+### `npm start`
 
-> Execute this script in a PowerShell terminal.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-```powershell
-.\scripts\git_version.ps1
-```
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## How it works
+### `npm test`
 
-When you run `.\scripts\git_version.ps1`, the script executes the following steps in order:
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-1. It sets the console output encoding to UTF-8.
-2. It displays commit type options and reads the user selection.
-3. It maps the selected option to a commit type label (`initial commit`, `feature`, `bugfix`, `release`, `build`, or `docs`) and exits if the input is invalid.
-4. It asks whether to add all files or choose specific files.
-5. If the user chooses all files, it runs `git add .`; if the user chooses specific files, it shows the modified files with `git status --short`, reads the file list input, and runs `git add` on the selected files; invalid input causes the script to exit.
-6. It prompts for the commit message and creates a commit with `git commit -m "[$tipo] - $mensagem"`.
-7. It asks whether to generate a version.
-   - If the user answers yes, it asks for a version type: initial version, release (major), feature (minor), or bugfix (patch).
-   - It obtains the latest tag from Git using `git describe --tags --abbrev=0`.
-   - For an initial version, it sets `0.0.1`; otherwise it parses the latest tag, increments the major, minor, or patch number according to the chosen version type, and constructs a new version string.
-   - It creates a tag name prefixed with `v`.
-   - It prompts the user to enter changelog notes line by line until an empty line is entered.
-   - It updates or creates `CHANGELOG.md` by prepending a new section for the new version and the entered notes.
-   - It commits the changelog update, creates the Git tag, and pushes the new tag to the remote origin.
-8. Finally, the script pushes the current branch to the remote repository with `git push`.
+### `npm run build`
 
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
