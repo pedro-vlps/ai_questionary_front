@@ -6,6 +6,7 @@ import { post } from '../helpers/FecthApi';
 const Login = () => {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordView, setPasswordView] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setToken } = useAppContext();
@@ -47,12 +48,19 @@ const Login = () => {
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
           <input
-            type="password"
+            type={passwordView ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
             required
           />
+          <button
+            type="button"
+            onClick={() => setPasswordView(!passwordView)}
+            style={{ marginTop: '5px' }}
+          >
+            {passwordView ? 'Hide' : 'Show'} Password
+          </button>
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" style={{ width: '100%', padding: '10px' }}>

@@ -1,4 +1,8 @@
-﻿## v0.1.1
+﻿## v0.1.2
+
+- Added "See password" button
+
+## v0.1.1
 
 - Removed unused declarations (Vercel Adjustments)
 
@@ -6,6 +10,7 @@
 
 - Questions generator and validator implemented
 - Login implemented
+
 
 
 
