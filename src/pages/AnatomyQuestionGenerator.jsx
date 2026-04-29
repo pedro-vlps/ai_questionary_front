@@ -1,7 +1,7 @@
 import { post } from '../helpers/FecthApi';
 import { useAppContext } from '../helpers/ContextApi';
 
-const Home = () => {
+const AnatomyQuestionGenerator = () => {
   const { setQuestionData, resetQuestionState } = useAppContext();
 
   const handleButtonClick = async (buttonText) => {
@@ -24,4 +24,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default AnatomyQuestionGenerator;

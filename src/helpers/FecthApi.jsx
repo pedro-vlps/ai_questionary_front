@@ -1,27 +1,54 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_API_URL || null;
+const BASE_URL = (process.env.REACT_APP_BASE_API_URL || '').replace(/\/$/, '');
+
+const buildUrl = (endpoint) => {
+  const normalizedEndpoint = endpoint.replace(/^\//, '');
+  return `${BASE_URL}/${normalizedEndpoint}`;
+};
+
+const getStoredAuthUser = () => {
+  try {
+    const storedUser = localStorage.getItem('auth_user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  } catch {
+    localStorage.removeItem('auth_user');
+    return null;
+  }
+};
+
+const getStoredSelectedInstitution = () => {
+  try {
+    const storedInstitution = localStorage.getItem('selected_institution');
+    return storedInstitution ? JSON.parse(storedInstitution) : null;
+  } catch {
+    localStorage.removeItem('selected_institution');
+    return null;
+  }
+};
 
 export const fetchApi = async (endpoint, body = null, method = 'GET') => {
   if (!BASE_URL) {
-    throw new Error('BASE_API_URL is not defined in environment variables');
+    throw new Error('REACT_APP_BASE_API_URL is not defined in environment variables');
   }
   
-  const token = localStorage.getItem('token');
+  const authUser = getStoredAuthUser();
+  const selectedInstitution = getStoredSelectedInstitution();
+  const institutionId = selectedInstitution?.id || authUser?.institution?.id;
   const isLoginRequest = endpoint === 'login';
   
   try {
     const config = {
       method,
-      url: `${BASE_URL}/${endpoint}`,
+      url: buildUrl(endpoint),
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     };
 
-    // Add token to all requests except login
-    if (token && !isLoginRequest) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+    if (institutionId && !isLoginRequest) {
+      config.headers['x-institution-id'] = institutionId;
     }
 
     if (body && (method === 'POST' || method === 'PATCH' || method === 'PUT')) {
@@ -31,6 +58,12 @@ export const fetchApi = async (endpoint, body = null, method = 'GET') => {
     const response = await axios(config);
     return response.data;
   } catch (error) {
+    if (error.response?.status === 401 && !isLoginRequest) {
+      localStorage.removeItem('auth_user');
+      localStorage.removeItem('selected_institution');
+      localStorage.removeItem('token');
+      window.dispatchEvent(new Event('auth:logout'));
+    }
     console.error(`Error on ${method} request to ${endpoint}:`, error);
     throw error;
   }

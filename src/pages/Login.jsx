@@ -9,7 +9,7 @@ const Login = () => {
   const [passwordView, setPasswordView] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setToken } = useAppContext();
+  const { login } = useAppContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,15 +18,14 @@ const Login = () => {
     try {
       const response = await post('login', { nickname, password });
       
-      if (response.token) {
-        localStorage.setItem('token', response.token);
-        setToken(response.token);
+      if (response.user) {
+        login(response.user);
         navigate('/');
       } else {
         setError('Invalid response from server');
       }
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      setError(err.response?.data?.detail || 'Login failed. Please check your credentials.');
       console.error('Login error:', err);
     }
   };
