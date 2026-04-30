@@ -1,5 +1,5 @@
 import { useAppContext } from "../helpers/ContextApi";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 
 const Question = () => {
   const {
@@ -8,10 +8,23 @@ const Question = () => {
     showResult,
     setSelectedAnswer,
     setShowResult,
+    isLoading,
   } = useAppContext();
 
   if (!questionData) {
     return null;
+  }
+
+  if (isLoading) {
+    return (
+      <Row className="w-100 m-0 p-0">
+        <Col className="px-5 pt-4">
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
+            <Spinner animation="border" variant="primary" />
+          </div>
+        </Col>
+      </Row>
+    );
   }
 
   const answers = [

@@ -38,6 +38,7 @@ export const AppProvider = ({ children }) => {
   const [questionData, setQuestionData] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [authUser, setAuthUser] = useState(getStoredAuthUser);
   const [selectedInstitution, setSelectedInstitutionState] = useState(getStoredSelectedInstitution);
 
@@ -84,6 +85,12 @@ export const AppProvider = ({ children }) => {
     setShowResult(false);
   };
 
+  const resetQuestionData = () => {
+    setQuestionData(null);
+    setSelectedAnswer(null);
+    setShowResult(false);
+  };
+
   const value = {
     currentArea,
     setCurrentArea,
@@ -99,7 +106,10 @@ export const AppProvider = ({ children }) => {
     setSelectedAnswer,
     showResult,
     setShowResult,
+    isLoading,
+    setIsLoading,
     resetQuestionState,
+    resetQuestionData,
     authUser,
     setAuthUser,
     selectedInstitution,

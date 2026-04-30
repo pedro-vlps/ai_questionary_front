@@ -1,20 +1,24 @@
 import { post } from '../helpers/FecthApi';
 import { useAppContext } from '../helpers/ContextApi';
-import { Card, Col, Row } from 'react-bootstrap';
+import { Card, Col, Row, Spinner } from 'react-bootstrap';
 
 const anatomyTopics = ['Locomotor', 'Esplacno', 'Neuro'];
 
 const AnatomyQuestionGenerator = () => {
-  const { setQuestionData, resetQuestionState } = useAppContext();
+  const { setQuestionData, resetQuestionState, questionData, isLoading, setIsLoading, resetQuestionData } = useAppContext();
 
   const handleButtonClick = async (buttonText) => {
     try {
+      setIsLoading(true);
       resetQuestionState();
+      resetQuestionData();
       const response = await post('ai/anatomy', { parameter: buttonText });
       console.log('Response:', response);
       setQuestionData(response.data);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -35,6 +39,11 @@ const AnatomyQuestionGenerator = () => {
             </Col>
           ))}
         </Row>
+        {isLoading && (
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
+            <Spinner animation="border" variant="primary" />
+          </div>
+        )}
       </Col>
     </Row>
   )
