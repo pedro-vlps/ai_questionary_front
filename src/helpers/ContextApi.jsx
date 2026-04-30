@@ -1,6 +1,26 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AppContext = createContext();
+
+const getStoredAuthUser = () => {
+  try {
+    const storedUser = localStorage.getItem('auth_user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  } catch {
+    localStorage.removeItem('auth_user');
+    return null;
+  }
+};
+
+const getStoredSelectedInstitution = () => {
+  try {
+    const storedInstitution = localStorage.getItem('selected_institution');
+    return storedInstitution ? JSON.parse(storedInstitution) : null;
+  } catch {
+    localStorage.removeItem('selected_institution');
+    return null;
+  }
+};
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
@@ -18,9 +38,55 @@ export const AppProvider = ({ children }) => {
   const [questionData, setQuestionData] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isLoading, setIsLoading] = useState(false);
+  const [authUser, setAuthUser] = useState(getStoredAuthUser);
+  const [selectedInstitution, setSelectedInstitutionState] = useState(getStoredSelectedInstitution);
+
+  const setSelectedInstitution = (institution) => {
+    if (institution) {
+      localStorage.setItem('selected_institution', JSON.stringify(institution));
+    } else {
+      localStorage.removeItem('selected_institution');
+    }
+
+    setSelectedInstitutionState(institution);
+  };
+
+  const login = (user) => {
+    localStorage.setItem('auth_user', JSON.stringify(user));
+    localStorage.removeItem('token');
+    localStorage.removeItem('selected_institution');
+    setAuthUser(user);
+    setSelectedInstitutionState(null);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('auth_user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('selected_institution');
+    setAuthUser(null);
+    setSelectedInstitutionState(null);
+    setCurrentArea(null);
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers([]);
+    setQuestionData(null);
+    setSelectedAnswer(null);
+    setShowResult(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('auth:logout', logout);
+    return () => window.removeEventListener('auth:logout', logout);
+  }, []);
 
   const resetQuestionState = () => {
+    setSelectedAnswer(null);
+    setShowResult(false);
+  };
+
+  const resetQuestionData = () => {
+    setQuestionData(null);
     setSelectedAnswer(null);
     setShowResult(false);
   };
@@ -40,9 +106,18 @@ export const AppProvider = ({ children }) => {
     setSelectedAnswer,
     showResult,
     setShowResult,
+    isLoading,
+    setIsLoading,
     resetQuestionState,
-    token,
-    setToken,
+    resetQuestionData,
+    authUser,
+    setAuthUser,
+    selectedInstitution,
+    setSelectedInstitution,
+    isAuthenticated: Boolean(authUser),
+    hasSelectedInstitution: Boolean(selectedInstitution),
+    login,
+    logout,
   };
 
   return (
