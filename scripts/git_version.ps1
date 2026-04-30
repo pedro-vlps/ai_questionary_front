@@ -1,24 +1,24 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-function AtualizarVersaoPyproject {
+function AtualizarVersaoPackageJson {
     param (
         [string]$version
     )
 
-    $arquivo = "pyproject.toml"
+    $arquivo = "package.json"
 
     if (-not (Test-Path $arquivo)) {
-        Write-Host "pyproject.toml not found, skipping update."
+        Write-Host "package.json not found, skipping update."
         return
     }
 
-    $conteudo = Get-Content $arquivo
+    $conteudo = Get-Content $arquivo -Raw
 
-    $novoConteudo = $conteudo -replace 'version\s*=\s*".*?"', "version = `"$version`""
+    $novoConteudo = $conteudo -replace '"version"\s*:\s*".*?"', "`"version`": `"$version`""
 
     Set-Content -Path $arquivo -Value $novoConteudo -Encoding UTF8
 
-    Write-Host "Version updated in pyproject.toml to $version"
+    Write-Host "Version updated in package.json to $version"
 }
 
 # Ask commit type
@@ -136,7 +136,7 @@ if ($gerarVersao -eq "y") {
 
     $tag = "v$novaVersao"
     
-    AtualizarVersaoPyproject -version $novaVersao
+    AtualizarVersaoPackageJson -version $novaVersao
 
     # ===== CHANGELOG INPUT =====
     Write-Host ""

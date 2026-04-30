@@ -65,6 +65,13 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem('selected_institution');
     setAuthUser(null);
     setSelectedInstitutionState(null);
+    setCurrentArea(null);
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers([]);
+    setQuestionData(null);
+    setSelectedAnswer(null);
+    setShowResult(false);
   };
 
   useEffect(() => {

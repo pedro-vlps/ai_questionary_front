@@ -69,6 +69,23 @@ export const fetchApi = async (endpoint, body = null, method = 'GET') => {
   }
 };
 
+export const logoutRequest = async () => {
+  if (!BASE_URL) {
+    throw new Error('REACT_APP_BASE_API_URL is not defined in environment variables');
+  }
+
+  const response = await axios({
+    method: 'POST',
+    url: buildUrl('logout'),
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data;
+};
+
 // Convenience methods
 export const get = (endpoint) => fetchApi(endpoint, null, 'GET');
 export const post = (endpoint, body) => fetchApi(endpoint, body, 'POST');

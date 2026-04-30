@@ -7,10 +7,11 @@ import { AppProvider, useAppContext } from "./helpers/ContextApi";
 import AnatomyQuestionGenerator from "./pages/AnatomyQuestionGenerator";
 import Question from "./pages/Question";
 import Login from "./pages/Login";
-import AppMenu from "./pages/AppMenu";
+import Register from "./pages/Register";
 import SubjectSelection from "./pages/SubjectSelection";
 import Header from "./Elements/Header";
 import Footer from "./Elements/Footer";
+import LandingPage from "./pages/LandingPage";
 
 function AppContent() {
   const { isAuthenticated, hasSelectedInstitution } = useAppContext();
@@ -18,7 +19,7 @@ function AppContent() {
 
   useEffect(() => {
     if (isAuthenticated && !hasSelectedInstitution) {
-      navigate("/selection");
+      navigate("/app");
     }
     // eslint-disable-next-line
   }, [isAuthenticated, hasSelectedInstitution]);
@@ -26,37 +27,45 @@ function AppContent() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route
-          path="/login"
-          element={!isAuthenticated ? <Login /> : <Navigate to="/app" />}
-        />
-        <Route
-          path="/anatomy"
-          element={
-            isAuthenticated && hasSelectedInstitution ? (
-              <>
-                <AnatomyQuestionGenerator />
-                <Question />
-              </>
-            ) : isAuthenticated ? (
-              <Navigate to="/app" />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/app"
-          element={isAuthenticated ? <AppMenu /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/selection"
-          element={
-            isAuthenticated ? <SubjectSelection /> : <Navigate to="/login" />
-          }
-        />
-      </Routes>
+      <main className="App-main">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              !isAuthenticated ? <LandingPage /> : <Navigate to="/app" />
+            }
+          />
+          <Route
+            path="/login"
+            element={!isAuthenticated ? <Login /> : <Navigate to="/app" />}
+          />
+          <Route
+            path="/register"
+            element={!isAuthenticated ? <Register /> : <Navigate to="/app" />}
+          />
+          <Route
+            path="/anatomy"
+            element={
+              isAuthenticated && hasSelectedInstitution ? (
+                <>
+                  <AnatomyQuestionGenerator />
+                  <Question />
+                </>
+              ) : isAuthenticated ? (
+                <Navigate to="/app" />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/app"
+            element={
+              isAuthenticated ? <SubjectSelection /> : <Navigate to="/login" />
+            }
+          />
+        </Routes>
+      </main>
       <Footer />
     </>
   );

@@ -65,6 +65,13 @@ const Login = () => {
         <button type="submit" style={{ width: '100%', padding: '10px' }}>
           Login
         </button>
+        <button
+          type="button"
+          onClick={() => navigate('/register')}
+          style={{ width: '100%', padding: '10px', marginTop: '10px' }}
+        >
+          Cadastro
+        </button>
       </form>
     </div>
   );
