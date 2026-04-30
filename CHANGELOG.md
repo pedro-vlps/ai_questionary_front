@@ -1,4 +1,8 @@
-﻿## v0.2.0
+﻿## v0.3.0
+
+- Added loading element to the question page
+
+## v0.2.0
 
 - Added cookies token validation
 - Added landing page
@@ -20,6 +24,7 @@
 
 - Questions generator and validator implemented
 - Login implemented
+
 
 
 
