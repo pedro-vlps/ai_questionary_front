@@ -5,7 +5,7 @@ import { Card, Col, Row, Spinner } from 'react-bootstrap';
 const anatomyTopics = ['Locomotor', 'Esplacno', 'Neuro'];
 
 const AnatomyQuestionGenerator = () => {
-  const { setQuestionData, resetQuestionState, questionData, isLoading, setIsLoading, resetQuestionData } = useAppContext();
+  const { setQuestionData, resetQuestionState, isLoading, setIsLoading, resetQuestionData } = useAppContext();
 
   const handleButtonClick = async (buttonText) => {
     try {
