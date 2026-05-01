@@ -1,15 +1,23 @@
 import axios from "axios";
 
-const ENVIRONMENT = process.env.ENVIRONMENT;
+const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT;
 // Em produção, usa o proxy local /api para evitar CORS
 // Em desenvolvimento, usa a URL direta da API se disponível
+const DEFAULT_BASE_URL = "/api";
 const BASE_URL = (
-  ENVIRONMENT === "P" ? "/api" : (process.env.REACT_APP_BASE_API_URL || "")
+  ENVIRONMENT === "P" ? DEFAULT_BASE_URL : (process.env.REACT_APP_BASE_API_URL || DEFAULT_BASE_URL)
 ).replace(/\/$/, "");
 
 const buildUrl = (endpoint) => {
   const normalizedEndpoint = endpoint.replace(/^\//, "");
   return `${BASE_URL}/${normalizedEndpoint}`;
+};
+
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
 };
 
 const getStoredAuthUser = () => {

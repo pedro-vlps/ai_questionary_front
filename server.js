@@ -19,6 +19,9 @@ app.use(
     secure: false,
     ws: true,
     onProxyReq: (proxyReq, req, res) => {
+      // Preserva o método HTTP original
+      proxyReq.method = req.method;
+      
       // Preserva headers originais
       proxyReq.setHeader('Content-Type', req.headers['content-type'] || 'application/json');
       
@@ -32,9 +35,6 @@ app.use(
       if (proxyRes.headers['set-cookie']) {
         res.setHeader('Set-Cookie', proxyRes.headers['set-cookie']);
       }
-    },
-    cookieDomainRewrite: {
-      "*": "" // Remove domínio dos cookies para funcionar no domínio atual
     },
   })
 );
