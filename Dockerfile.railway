@@ -13,12 +13,15 @@ FROM node:20
 
 WORKDIR /app
 
-RUN npm install -g serve
+# instalar dependências do server
+COPY package*.json ./
+RUN npm install --omit=dev
 
+# copiar build e server
 COPY --from=build /app/build ./build
+COPY server.js ./server.js
 
-# Define a porta que o Railway deve usar
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["sh", "-c", "serve -s build -l $PORT"]
+CMD ["node", "server.js"]

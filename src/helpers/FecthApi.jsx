@@ -1,57 +1,62 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = (process.env.REACT_APP_BASE_API_URL || '').replace(/\/$/, '');
+const ENVIRONMENT = process.env.ENVIRONMENT;
+const BASE_URL = (
+  ENVIRONMENT === "D" ? process.env.REACT_APP_BASE_API_URL || "" : "/api"
+).replace(/\/$/, "");
 
 const buildUrl = (endpoint) => {
-  const normalizedEndpoint = endpoint.replace(/^\//, '');
+  const normalizedEndpoint = endpoint.replace(/^\//, "");
   return `${BASE_URL}/${normalizedEndpoint}`;
 };
 
 const getStoredAuthUser = () => {
   try {
-    const storedUser = localStorage.getItem('auth_user');
+    const storedUser = localStorage.getItem("auth_user");
     return storedUser ? JSON.parse(storedUser) : null;
   } catch {
-    localStorage.removeItem('auth_user');
+    localStorage.removeItem("auth_user");
     return null;
   }
 };
 
 const getStoredSelectedInstitution = () => {
   try {
-    const storedInstitution = localStorage.getItem('selected_institution');
+    const storedInstitution = localStorage.getItem("selected_institution");
     return storedInstitution ? JSON.parse(storedInstitution) : null;
   } catch {
-    localStorage.removeItem('selected_institution');
+    localStorage.removeItem("selected_institution");
     return null;
   }
 };
 
-export const fetchApi = async (endpoint, body = null, method = 'GET') => {
+export const fetchApi = async (endpoint, body = null, method = "GET") => {
   if (!BASE_URL) {
-    throw new Error('REACT_APP_BASE_API_URL is not defined in environment variables');
+    throw new Error(
+      "REACT_APP_BASE_API_URL is not defined in environment variables",
+    );
   }
-  
+
   const authUser = getStoredAuthUser();
   const selectedInstitution = getStoredSelectedInstitution();
   const institutionId = selectedInstitution?.id || authUser?.institution?.id;
-  const isLoginRequest = endpoint === 'login';
-  
+  const isLoginRequest = endpoint === "login";
+
   try {
     const config = {
       method,
       url: buildUrl(endpoint),
       withCredentials: true,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
     if (institutionId && !isLoginRequest) {
-      config.headers['x-institution-id'] = institutionId;
+      config.headers["x-institution-id"] = institutionId;
     }
 
-    if (body && (method === 'POST' || method === 'PATCH' || method === 'PUT')) {
+    if (body && (method === "POST" || method === "PATCH" || method === "PUT")) {
       config.data = body;
     }
 
@@ -59,10 +64,10 @@ export const fetchApi = async (endpoint, body = null, method = 'GET') => {
     return response.data;
   } catch (error) {
     if (error.response?.status === 401 && !isLoginRequest) {
-      localStorage.removeItem('auth_user');
-      localStorage.removeItem('selected_institution');
-      localStorage.removeItem('token');
-      window.dispatchEvent(new Event('auth:logout'));
+      localStorage.removeItem("auth_user");
+      localStorage.removeItem("selected_institution");
+      localStorage.removeItem("token");
+      window.dispatchEvent(new Event("auth:logout"));
     }
     console.error(`Error on ${method} request to ${endpoint}:`, error);
     throw error;
@@ -71,15 +76,17 @@ export const fetchApi = async (endpoint, body = null, method = 'GET') => {
 
 export const logoutRequest = async () => {
   if (!BASE_URL) {
-    throw new Error('REACT_APP_BASE_API_URL is not defined in environment variables');
+    throw new Error(
+      "REACT_APP_BASE_API_URL is not defined in environment variables",
+    );
   }
 
   const response = await axios({
-    method: 'POST',
-    url: buildUrl('logout'),
+    method: "POST",
+    url: buildUrl("logout"),
     withCredentials: true,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
@@ -87,8 +94,8 @@ export const logoutRequest = async () => {
 };
 
 // Convenience methods
-export const get = (endpoint) => fetchApi(endpoint, null, 'GET');
-export const post = (endpoint, body) => fetchApi(endpoint, body, 'POST');
-export const patch = (endpoint, body) => fetchApi(endpoint, body, 'PATCH');
-export const put = (endpoint, body) => fetchApi(endpoint, body, 'PUT');
-export const del = (endpoint) => fetchApi(endpoint, null, 'DELETE');
+export const get = (endpoint) => fetchApi(endpoint, null, "GET");
+export const post = (endpoint, body) => fetchApi(endpoint, body, "POST");
+export const patch = (endpoint, body) => fetchApi(endpoint, body, "PATCH");
+export const put = (endpoint, body) => fetchApi(endpoint, body, "PUT");
+export const del = (endpoint) => fetchApi(endpoint, null, "DELETE");
