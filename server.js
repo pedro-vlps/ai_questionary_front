@@ -13,9 +13,9 @@ app.use(
     target: api_url,
     changeOrigin: true,
     secure: false,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    headers: {
-      "Content-Type": "application/json",
+    onProxyReq: (proxyReq, req, res) => {
+      // Preserve o método HTTP original
+      proxyReq.setHeader('Content-Type', req.headers['content-type'] || 'application/json');
     },
   })
 );
