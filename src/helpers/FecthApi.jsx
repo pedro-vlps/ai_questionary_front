@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT;
+const ENVIRONMENT = process.env.ENVIRONMENT || process.env.REACT_APP_ENVIRONMENT;
 // Em produção, usa o proxy local /api para evitar CORS
 // Em desenvolvimento, usa a URL direta da API se disponível
 const DEFAULT_BASE_URL = "/api";
