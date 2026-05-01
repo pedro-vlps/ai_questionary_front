@@ -13,13 +13,6 @@ const buildUrl = (endpoint) => {
   return `${BASE_URL}/${normalizedEndpoint}`;
 };
 
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-};
-
 const getStoredAuthUser = () => {
   try {
     const storedUser = localStorage.getItem("auth_user");
