@@ -12,6 +12,11 @@ app.use(
   createProxyMiddleware({
     target: api_url,
     changeOrigin: true,
+    secure: false,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
 );
 
