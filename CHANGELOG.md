@@ -1,4 +1,8 @@
-﻿## v0.3.0
+## v0.4.0
+
+- Changed cookies validation to Authorization header validation
+
+## v0.3.0
 
 - Added loading element to the question page
 
