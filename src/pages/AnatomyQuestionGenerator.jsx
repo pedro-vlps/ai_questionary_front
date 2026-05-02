@@ -1,6 +1,7 @@
 import { post } from "../helpers/FecthApi";
 import { useAppContext } from "../helpers/ContextApi";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const anatomyTopics = [
   { title: "Locomotor", apiName: "Locomotor" },
@@ -9,6 +10,8 @@ const anatomyTopics = [
 ];
 
 const AnatomyQuestionGenerator = () => {
+  const navigate = useNavigate();
+
   const {
     setQuestionData,
     resetQuestionState,
@@ -32,13 +35,33 @@ const AnatomyQuestionGenerator = () => {
     }
   };
 
+  const handleMoveToHistory = () => {
+    navigate("/questions");
+  };
+
   return (
-    <Row className="w-100 m-0 p-0">
+    <Row className="w-100 m-0 p-0 d-flex flex-column align-items-center">
+      <Col xs={12} sm={6} md={4} lg={3}>
+        <Card
+          className="w-100 mx-auto"
+          role="button"
+          onClick={() => handleMoveToHistory()}
+        >
+          <Card.Body>Lista de Perguntas</Card.Body>
+        </Card>
+      </Col>
       <Col className="px-5 pt-4">
         <h5>Choose your anatomy topic</h5>
         <Row className="g-3 justify-content-center">
           {anatomyTopics.map((topic) => (
-            <Col key={topic.title} xs={12} sm={6} md={4} lg={3} className="d-flex">
+            <Col
+              key={topic.title}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              className="d-flex"
+            >
               <Card
                 className="w-100 h-100"
                 role="button"
