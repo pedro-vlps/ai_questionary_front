@@ -1,3 +1,7 @@
+## v0.4.1
+
+- Changing ai route parameters word from spanish to english words
+
 ## v0.4.0
 
 - Changed cookies validation to Authorization header validation
