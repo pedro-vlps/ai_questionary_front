@@ -1,3 +1,7 @@
+## v0.5.0
+
+- Added questions page
+
 ## v0.4.1
 
 - Changing ai route parameters word from spanish to english words
