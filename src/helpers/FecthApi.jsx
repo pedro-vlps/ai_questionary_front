@@ -1,12 +1,8 @@
 import axios from "axios";
 
-const ENVIRONMENT = process.env.ENVIRONMENT || process.env.REACT_APP_ENVIRONMENT;
-// Em produção, usa o proxy local /api para evitar CORS
-// Em desenvolvimento, usa a URL direta da API se disponível
-const DEFAULT_BASE_URL = "/api";
-const BASE_URL = (
-  ENVIRONMENT === "P" ? DEFAULT_BASE_URL : (process.env.REACT_APP_BASE_API_URL || DEFAULT_BASE_URL)
-).replace(/\/$/, "");
+const BASE_URL = process.env.REACT_APP_BASE_API_URL
+  ? process.env.REACT_APP_BASE_API_URL.replace(/\/$/, "")
+  : "";
 
 const buildUrl = (endpoint) => {
   const normalizedEndpoint = endpoint.replace(/^\//, "");
@@ -33,6 +29,16 @@ const getStoredSelectedInstitution = () => {
   }
 };
 
+const getToken = () => {
+  try {
+    const storedToken = localStorage.getItem("token");
+    return storedToken || null;
+  } catch {
+    localStorage.removeItem("token");
+    return null;
+  }
+};
+
 export const fetchApi = async (endpoint, body = null, method = "GET") => {
   if (!BASE_URL) {
     throw new Error(
@@ -43,17 +49,21 @@ export const fetchApi = async (endpoint, body = null, method = "GET") => {
   const authUser = getStoredAuthUser();
   const selectedInstitution = getStoredSelectedInstitution();
   const institutionId = selectedInstitution?.id || authUser?.institution?.id;
+  const token = getToken();
   const isLoginRequest = endpoint === "login";
 
   try {
     const config = {
       method,
       url: buildUrl(endpoint),
-      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },
     };
+
+    if (token && !isLoginRequest) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
 
     if (institutionId && !isLoginRequest) {
       config.headers["x-institution-id"] = institutionId;
@@ -84,12 +94,13 @@ export const logoutRequest = async () => {
     );
   }
 
+  const token = getToken();
   const response = await axios({
     method: "POST",
     url: buildUrl("logout"),
-    withCredentials: true,
     headers: {
       "Content-Type": "application/json",
+      ...(token && { "Authorization": `Bearer ${token}` }),
     },
   });
 

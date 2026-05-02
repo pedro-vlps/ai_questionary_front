@@ -52,9 +52,11 @@ export const AppProvider = ({ children }) => {
     setSelectedInstitutionState(institution);
   };
 
-  const login = (user) => {
+  const login = (user, token) => {
     localStorage.setItem('auth_user', JSON.stringify(user));
-    localStorage.removeItem('token');
+    if (token) {
+      localStorage.setItem('token', token);
+    }
     localStorage.removeItem('selected_institution');
     setAuthUser(user);
     setSelectedInstitutionState(null);

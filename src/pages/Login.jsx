@@ -18,7 +18,12 @@ const Login = () => {
     try {
       const response = await post('login', { nickname, password });
       
-      if (response.user) {
+      console.log('Login response:', response);
+      
+      if (response.user && response.token) {
+        login(response.user, response.token);
+        navigate('/');
+      } else if (response.user) {
         login(response.user);
         navigate('/');
       } else {
