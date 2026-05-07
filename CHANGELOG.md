@@ -1,3 +1,9 @@
+## v0.6.0
+
+- Added payment logic
+- Improved question generation usage
+- Improved Login visual page
+
 ## v0.5.0
 
 - Added questions page
