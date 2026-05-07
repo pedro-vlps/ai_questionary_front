@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { post } from "../helpers/FecthApi";
 import { useAppContext } from "../helpers/ContextApi";
-import { Card, Col, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const anatomyTopics = [
@@ -11,6 +12,7 @@ const anatomyTopics = [
 
 const AnatomyQuestionGenerator = () => {
   const navigate = useNavigate();
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
   const {
     setQuestionData,
@@ -20,12 +22,12 @@ const AnatomyQuestionGenerator = () => {
     resetQuestionData,
   } = useAppContext();
 
-  const handleButtonClick = async (buttonText) => {
+  const generateQuestion = async (topic) => {
     try {
       setIsLoading(true);
       resetQuestionState();
       resetQuestionData();
-      const response = await post("ai/anatomy", { parameter: buttonText });
+      const response = await post("ai/anatomy", { parameter: topic.apiName });
       console.log("Response:", response);
       setQuestionData(response.data);
     } catch (error) {
@@ -37,6 +39,25 @@ const AnatomyQuestionGenerator = () => {
 
   const handleMoveToHistory = () => {
     navigate("/questions");
+  };
+
+  const handleSelectTopic = async (topic) => {
+    setSelectedTopic(topic);
+    await generateQuestion(topic);
+  };
+
+  const handleChangeTopic = () => {
+    setSelectedTopic(null);
+    resetQuestionState();
+    resetQuestionData();
+  };
+
+  const handleNextQuestion = async () => {
+    if (!selectedTopic) {
+      return;
+    }
+
+    await generateQuestion(selectedTopic);
   };
 
   return (
@@ -51,27 +72,47 @@ const AnatomyQuestionGenerator = () => {
         </Card>
       </Col>
       <Col className="px-5 pt-4">
-        <h5>Choose your anatomy topic</h5>
-        <Row className="g-3 justify-content-center">
-          {anatomyTopics.map((topic) => (
-            <Col
-              key={topic.title}
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              className="d-flex"
-            >
-              <Card
-                className="w-100 h-100"
-                role="button"
-                onClick={() => handleButtonClick(topic.apiName)}
-              >
-                <Card.Body>{topic.title}</Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {!selectedTopic ? (
+          <>
+            <h5>Choose your anatomy topic</h5>
+            <Row className="g-3 justify-content-center">
+              {anatomyTopics.map((topic) => (
+                <Col
+                  key={topic.title}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  className="d-flex"
+                >
+                  <Card
+                    className="w-100 h-100"
+                    role="button"
+                    onClick={() => handleSelectTopic(topic)}
+                  >
+                    <Card.Body>{topic.title}</Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </>
+        ) : (
+          <>
+            <div className="d-flex flex-column align-items-center gap-3">
+              <h5 className="mb-0">
+                Selected topic: <strong>{selectedTopic.title}</strong>
+              </h5>
+              <div className="d-flex flex-wrap justify-content-center gap-3">
+                <Button variant="outline-light" onClick={handleChangeTopic}>
+                  Trocar materia
+                </Button>
+                <Button onClick={handleNextQuestion} disabled={isLoading}>
+                  Proxima pergunta
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
         {isLoading && (
           <div
             className="d-flex justify-content-center align-items-center"

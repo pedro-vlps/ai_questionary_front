@@ -39,6 +39,15 @@ const getToken = () => {
   }
 };
 
+const getInstitutionId = (authUser, selectedInstitution) => {
+  return (
+    selectedInstitution?.id ||
+    authUser?.institution?.id ||
+    authUser?.institution_id ||
+    null
+  );
+};
+
 export const fetchApi = async (endpoint, body = null, method = "GET") => {
   if (!BASE_URL) {
     throw new Error(
@@ -48,7 +57,7 @@ export const fetchApi = async (endpoint, body = null, method = "GET") => {
 
   const authUser = getStoredAuthUser();
   const selectedInstitution = getStoredSelectedInstitution();
-  const institutionId = selectedInstitution?.id || authUser?.institution?.id;
+  const institutionId = getInstitutionId(authUser, selectedInstitution);
   const token = getToken();
   const isLoginRequest = endpoint === "login";
 

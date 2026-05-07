@@ -15,7 +15,8 @@ import LandingPage from "./pages/LandingPage";
 import QuestionsList from "./pages/QuestionsList";
 
 function AppContent() {
-  const { isAuthenticated, hasSelectedInstitution } = useAppContext();
+  const { isAuthenticated, hasSelectedInstitution, hasSubscriptionAccess } =
+    useAppContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function AppContent() {
           <Route
             path="/anatomy"
             element={
-              isAuthenticated && hasSelectedInstitution ? (
+              isAuthenticated && hasSubscriptionAccess && hasSelectedInstitution ? (
                 <>
                   <AnatomyQuestionGenerator />
                   <Question />
@@ -68,7 +69,13 @@ function AppContent() {
           <Route
             path="/questions"
             element={
-              isAuthenticated ? <QuestionsList /> : <Navigate to="/login" />
+              isAuthenticated && hasSubscriptionAccess && hasSelectedInstitution ? (
+                <QuestionsList />
+              ) : isAuthenticated ? (
+                <Navigate to="/app" />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
         </Routes>

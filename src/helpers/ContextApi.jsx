@@ -1,6 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
+import { get } from "./FecthApi";
 
 const AppContext = createContext();
+
+const DEFAULT_INSTITUTION_NAME = "UBA";
 
 const getStoredAuthUser = () => {
   try {
@@ -14,18 +17,30 @@ const getStoredAuthUser = () => {
 
 const getStoredSelectedInstitution = () => {
   try {
-    const storedInstitution = localStorage.getItem('selected_institution');
+    const storedInstitution = localStorage.getItem("selected_institution");
     return storedInstitution ? JSON.parse(storedInstitution) : null;
   } catch {
-    localStorage.removeItem('selected_institution');
+    localStorage.removeItem("selected_institution");
     return null;
   }
+};
+
+const userHasSubscriptionAccess = (user) => {
+  if (!user) {
+    return false;
+  }
+
+  if (user.global_role === "Admin") {
+    return true;
+  }
+
+  return Boolean(user.institution_id || user.institution?.id);
 };
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useAppContext must be used within AppProvider');
+    throw new Error("useAppContext must be used within AppProvider");
   }
   return context;
 };
@@ -41,33 +56,89 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [authUser, setAuthUser] = useState(getStoredAuthUser);
   const [selectedInstitution, setSelectedInstitutionState] = useState(getStoredSelectedInstitution);
+  const [hasSubscriptionAccess, setHasSubscriptionAccess] = useState(() =>
+    userHasSubscriptionAccess(getStoredAuthUser()),
+  );
 
   const setSelectedInstitution = (institution) => {
     if (institution) {
-      localStorage.setItem('selected_institution', JSON.stringify(institution));
+      localStorage.setItem("selected_institution", JSON.stringify(institution));
     } else {
-      localStorage.removeItem('selected_institution');
+      localStorage.removeItem("selected_institution");
     }
 
     setSelectedInstitutionState(institution);
   };
 
-  const login = (user, token) => {
-    localStorage.setItem('auth_user', JSON.stringify(user));
-    if (token) {
-      localStorage.setItem('token', token);
+  const getCurrentUserId = () => {
+    return authUser?.user_id || authUser?.id || null;
+  };
+
+  const ensureDefaultInstitution = async () => {
+    if (selectedInstitution) {
+      return selectedInstitution;
     }
-    localStorage.removeItem('selected_institution');
+
+    const response = await get("institutions");
+    const institution =
+      response.data.find((item) => item.name === DEFAULT_INSTITUTION_NAME) || null;
+
+    if (institution) {
+      setSelectedInstitution(institution);
+    }
+
+    return institution;
+  };
+
+  const refreshSubscriptionAccess = async () => {
+    if (!authUser) {
+      setHasSubscriptionAccess(false);
+      return false;
+    }
+
+    if (authUser.global_role === "Admin") {
+      setHasSubscriptionAccess(true);
+      return true;
+    }
+
+    try {
+      const institution = await ensureDefaultInstitution();
+      if (!institution) {
+        setHasSubscriptionAccess(false);
+        return false;
+      }
+
+      await get("questions");
+      setHasSubscriptionAccess(true);
+      return true;
+    } catch (error) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        setHasSubscriptionAccess(false);
+        return false;
+      }
+
+      throw error;
+    }
+  };
+
+  const login = (user, token) => {
+    localStorage.setItem("auth_user", JSON.stringify(user));
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+    localStorage.removeItem("selected_institution");
     setAuthUser(user);
     setSelectedInstitutionState(null);
+    setHasSubscriptionAccess(userHasSubscriptionAccess(user));
   };
 
   const logout = () => {
-    localStorage.removeItem('auth_user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('selected_institution');
+    localStorage.removeItem("auth_user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("selected_institution");
     setAuthUser(null);
     setSelectedInstitutionState(null);
+    setHasSubscriptionAccess(false);
     setCurrentArea(null);
     setQuestions([]);
     setCurrentQuestionIndex(0);
@@ -78,8 +149,8 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('auth:logout', logout);
-    return () => window.removeEventListener('auth:logout', logout);
+    window.addEventListener("auth:logout", logout);
+    return () => window.removeEventListener("auth:logout", logout);
   }, []);
 
   const resetQuestionState = () => {
@@ -114,10 +185,13 @@ export const AppProvider = ({ children }) => {
     resetQuestionData,
     authUser,
     setAuthUser,
+    getCurrentUserId,
     selectedInstitution,
     setSelectedInstitution,
     isAuthenticated: Boolean(authUser),
     hasSelectedInstitution: Boolean(selectedInstitution),
+    hasSubscriptionAccess,
+    refreshSubscriptionAccess,
     login,
     logout,
   };
