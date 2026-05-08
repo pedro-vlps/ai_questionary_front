@@ -29,10 +29,10 @@ const Header = () => {
     <Row className="w-100 m-0 p-0 d-flex justify-content-between py-4 px-4">
       {isAuthenticated ? (
         <>
-          <Col md={2}>
+          <Col md={3} className="d-flex align-items-center justify-content-center justify-content-md-start">
             <img src={Logo} alt="Logo of the project" />
           </Col>
-          <Col md={5} className="d-flex justify-content-center align-items-center">
+          <Col md={6} className="d-flex justify-content-center align-items-center">
             {authUser?.global_role !== "Admin" ? (
               <div className="text-center">
                 <div className="d-flex align-items-center justify-content-center gap-2">
@@ -52,8 +52,16 @@ const Header = () => {
               </div>
             ) : null}
           </Col>
-          <Col md={2}>
-            <Button className="w-50" onClick={handleLogout}>Log Out</Button>
+          <Col md={3} className="d-flex justify-content-center justify-content-md-end align-items-center">
+            <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-end">
+              <Button variant="outline-light" onClick={() => navigate("/app")}>
+                Inicio
+              </Button>
+              <Button variant="outline-light" onClick={() => navigate("/answered-questions")}>
+                Minhas respostas
+              </Button>
+              <Button onClick={handleLogout}>Log Out</Button>
+            </div>
           </Col>
         </>
       ) : (

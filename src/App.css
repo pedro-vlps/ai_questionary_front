@@ -319,3 +319,134 @@
 .App-link {
   color: #61dafb;
 }
+
+.answered-questions-page {
+  width: 100%;
+}
+
+.answered-questions-shell {
+  width: min(1220px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 56px;
+}
+
+.answered-questions-card,
+.answered-questions-empty {
+  background: rgba(8, 17, 28, 0.72);
+  border: 1px solid rgba(166, 185, 212, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
+  color: #f5f7fb;
+  border-radius: 28px;
+}
+
+.answered-questions-badge {
+  background: rgba(94, 140, 255, 0.18) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(94, 140, 255, 0.32);
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.answered-questions-title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.answered-questions-subtitle {
+  color: rgb(129, 133, 139);
+  max-width: 58ch;
+  line-height: 1.7;
+}
+
+.answered-questions-count {
+  min-width: 160px;
+  padding: 1rem 1.2rem;
+  border-radius: 22px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(245, 170, 76, 0.24), rgba(94, 140, 255, 0.16));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.answered-questions-count span,
+.answered-questions-count small {
+  display: block;
+}
+
+.answered-questions-count span {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.answered-questions-count small {
+  margin-top: 0.35rem;
+  color: rgb(129, 133, 139);
+}
+
+.answered-questions-table-wrap {
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.answered-questions-table {
+  color: #f5f7fb;
+  margin-bottom: 0;
+}
+
+.answered-questions-table thead th {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  color: #5088ff;
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.answered-questions-table td {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: transparent;
+}
+
+.answered-questions-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.answered-question-text {
+  min-width: 320px;
+  white-space: normal;
+}
+
+.answered-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.answered-pill-user {
+  background: rgb(94, 140, 255);
+  color: #ffffff;
+}
+
+.answered-pill-correct {
+  background: rgb(27, 182, 94);
+  color: #ffffff;
+}
+
+@media (max-width: 576px) {
+  .answered-questions-shell {
+    width: min(100% - 24px, 1220px);
+  }
+
+  .answered-question-text {
+    min-width: 220px;
+  }
+}

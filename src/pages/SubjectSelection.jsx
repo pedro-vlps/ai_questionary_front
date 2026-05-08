@@ -225,6 +225,11 @@ const SubjectSelection = () => {
             </Col>
           ))}
         </Row>
+        <div className="d-flex justify-content-center mt-4">
+          <Button variant="outline-light" onClick={() => navigate("/answered-questions")}>
+            Ver minhas respostas
+          </Button>
+        </div>
       </Col>
     </Row>
   );
