@@ -1,3 +1,7 @@
+## v1.1.1
+
+- Adjustments on the Landing Page
+
 ## v1.1.0
 
 - Added a page to review ansered questions
