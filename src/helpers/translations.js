@@ -37,24 +37,21 @@ export const translations = {
     "landing.highlight.mockExams.title": "Mock exams (Coming soon)",
     "landing.highlight.mockExams.description":
       "Answer questions in sequence to simulate real exam behavior.",
-    "landing.feature.questionLimit":
-      "Up to 150 question generations per month",
+    "landing.feature.questionLimit": "Up to 150 question generations per month",
     "landing.subject.anatomy": "Anatomy",
     "landing.subject.histology": "Histology (Coming soon)",
     "landing.subject.embryology": "Embryology (Coming soon)",
     "landing.subject.molecularBiology": "Molecular biology (Coming soon)",
     "landing.subject.genetics": "Genetics (Coming soon)",
     "landing.title": "UBA Trainer",
-    "landing.subtitle":
-      "A platform to train for your UBA anatomy exams.",
+    "landing.subtitle": "A platform to train for your UBA anatomy exams.",
     "landing.planTitle": "Basic Plan",
     "landing.subjectsTitle": "Subjects available in the app",
     "landing.createAccount": "Create account and subscribe",
     "landing.alreadyHaveAccount": "I already have an account",
 
     "login.invalidServerResponse": "Invalid response from the server.",
-    "login.failed":
-      "Login failed. Check your credentials and try again.",
+    "login.failed": "Login failed. Check your credentials and try again.",
     "login.title": "Login",
     "login.nickname": "Nickname",
     "login.password": "Password",
@@ -64,8 +61,7 @@ export const translations = {
     "login.signIn": "Sign in",
     "login.createAccount": "Create account",
 
-    "register.userNotIdentified":
-      "Unable to identify the created user.",
+    "register.userNotIdentified": "Unable to identify the created user.",
     "register.successRedirect":
       "Account created successfully. Redirecting to checkout...",
     "register.checkoutStartFailed":
@@ -91,8 +87,7 @@ export const translations = {
     "subjectSelection.subscriptionStatusFailed":
       "Unable to verify the subscription status.",
     "subjectSelection.pendingBadge": "Pending subscription",
-    "subjectSelection.pendingTitle":
-      "Activate your access to use the platform",
+    "subjectSelection.pendingTitle": "Activate your access to use the platform",
     "subjectSelection.pendingDescription":
       "Your login is already active. To use the protected routes in the app, finish the Stripe subscription and then refresh your access status.",
     "subjectSelection.planLabel": "UBA Basic Plan",
@@ -114,25 +109,21 @@ export const translations = {
     "anatomy.topic.locomotor": "Locomotor system",
     "anatomy.topic.splanchnology": "Splanchnology",
     "anatomy.topic.neuroanatomy": "Neuroanatomy",
-    "anatomy.generateFailed":
-      "Unable to generate a new question right now.",
+    "anatomy.generateFailed": "Unable to generate a new question right now.",
     "anatomy.chooseTopic": "Choose your anatomy topic",
     "anatomy.selectedTopic": "Selected topic:",
     "anatomy.changeTopic": "Change topic",
     "anatomy.nextQuestion": "Next question",
 
-    "question.userNotIdentified":
-      "Unable to identify the authenticated user.",
-    "question.saveFailed":
-      "Unable to save your answer. Please try again.",
+    "question.userNotIdentified": "Unable to identify the authenticated user.",
+    "question.saveFailed": "Unable to save your answer. Please try again.",
     "question.savingAnswer": "Saving your answer...",
     "question.correct": "Correct:",
     "question.yourAnswer": "Your answer:",
 
     "answeredQuestions.userNotIdentified":
       "Unable to identify the authenticated user.",
-    "answeredQuestions.loadFailed":
-      "Unable to load your answers right now.",
+    "answeredQuestions.loadFailed": "Unable to load your answers right now.",
     "answeredQuestions.badge": "User history",
     "answeredQuestions.title": "Answered questions",
     "answeredQuestions.subtitle":
@@ -229,8 +220,7 @@ export const translations = {
     "subjectSelection.subscriptionStatusFailed":
       "No fue posible verificar el estado de la suscripcion.",
     "subjectSelection.pendingBadge": "Suscripcion pendiente",
-    "subjectSelection.pendingTitle":
-      "Activa tu acceso para usar la plataforma",
+    "subjectSelection.pendingTitle": "Activa tu acceso para usar la plataforma",
     "subjectSelection.pendingDescription":
       "Tu login ya esta activo. Para usar las rutas protegidas de la aplicacion, completa la suscripcion en Stripe y luego actualiza el estado de acceso.",
     "subjectSelection.planLabel": "Plan Basico UBA",
@@ -313,8 +303,7 @@ export const translations = {
     "landing.highlight.mockExams.title": "Simulados (Em breve)",
     "landing.highlight.mockExams.description":
       "Responda perguntas em sequencia para simular o comportamento de provas reais.",
-    "landing.feature.questionLimit":
-      "Ate 150 geracoes de perguntas por mes",
+    "landing.feature.questionLimit": "Ate 150 geracoes de perguntas por mes",
     "landing.subject.anatomy": "Anatomia",
     "landing.subject.histology": "Histologia (Em breve)",
     "landing.subject.embryology": "Embriologia (Em breve)",
@@ -367,8 +356,7 @@ export const translations = {
     "subjectSelection.subscriptionStatusFailed":
       "Nao foi possivel verificar o status da assinatura.",
     "subjectSelection.pendingBadge": "Assinatura pendente",
-    "subjectSelection.pendingTitle":
-      "Ative seu acesso para usar a plataforma",
+    "subjectSelection.pendingTitle": "Ative seu acesso para usar a plataforma",
     "subjectSelection.pendingDescription":
       "Seu login ja esta liberado. Para usar as rotas protegidas do aplicativo, finalize a assinatura no Stripe e depois atualize o status do acesso.",
     "subjectSelection.planLabel": "Plano Basico UBA",
