@@ -3,7 +3,7 @@ FROM node:20 AS build
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY public ./public
 COPY src ./src
 RUN npm run build
@@ -15,7 +15,7 @@ WORKDIR /app
 
 # instalar dependências do server
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
 # copiar build e server
 COPY --from=build /app/build ./build
