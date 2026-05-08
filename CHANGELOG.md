@@ -1,6 +1,5 @@
 ## v1.2.1
 
-- 
 - Adjustments on Docker file to fix deploy issues
 
 ## v1.2.0
