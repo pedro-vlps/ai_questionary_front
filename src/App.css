@@ -1,7 +1,10 @@
 .App {
   text-align: center;
-  background-color: #4c535f;
-  color: white;
+  background:
+    radial-gradient(circle at top, rgba(245, 170, 76, 0.24), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(94, 140, 255, 0.18), transparent 24%),
+    linear-gradient(180deg, #102033 0%, #0c1725 42%, #08111c 100%);
+  color: #f5f7fb;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -11,6 +14,279 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.landing-page {
+  width: 100%;
+}
+
+.landing-hero,
+.landing-section {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.landing-hero {
+  padding: 36px 0 30px;
+}
+
+.landing-section {
+  padding: 30px 0;
+}
+
+.landing-section-final {
+  padding-bottom: 56px;
+}
+
+.landing-badge {
+  background: rgba(245, 170, 76, 0.16) !important;
+  color: #ffd59b !important;
+  border: 1px solid rgba(245, 170, 76, 0.3);
+  border-radius: 999px;
+  padding: 0.6rem 0.95rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landing-title {
+  font-size: clamp(2.5rem, 4vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  max-width: 11ch;
+  margin-bottom: 1rem;
+}
+
+.landing-subtitle,
+.landing-section-text,
+.landing-cta-text,
+.landing-plan-copy,
+.landing-footnote,
+.landing-mini-text,
+.landing-step-text {
+  color: rgb(129, 133, 139);
+}
+
+.landing-subtitle {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.landing-primary-button,
+.landing-secondary-button {
+  border-radius: 999px;
+  padding: 0.95rem 1.4rem;
+  font-weight: 700;
+  border-width: 1px;
+}
+
+.landing-primary-button {
+  background: linear-gradient(135deg, #f5aa4c 0%, #f07a3c 100%);
+  border-color: transparent;
+  color: #09131f;
+  box-shadow: 0 16px 40px rgba(240, 122, 60, 0.22);
+}
+
+.landing-primary-button:hover,
+.landing-primary-button:focus,
+.landing-primary-button:active {
+  background: linear-gradient(135deg, #ffc06b 0%, #ff8d52 100%) !important;
+  color: #09131f !important;
+}
+
+.landing-secondary-button {
+  border-color: rgba(255, 255, 255, 0.24);
+  color: #f5f7fb;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.landing-secondary-button:hover,
+.landing-secondary-button:focus,
+.landing-secondary-button:active {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.landing-mini-card,
+.landing-step-card,
+.landing-plan-card,
+.landing-cta-card {
+  background: rgba(8, 17, 28, 0.68);
+  border: 1px solid rgba(166, 185, 212, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
+  color: #f5f7fb;
+}
+
+.landing-mini-card,
+.landing-step-card {
+  border-radius: 24px;
+}
+
+.landing-plan-card,
+.landing-cta-card {
+  border-radius: 32px;
+}
+
+.landing-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, rgba(245, 170, 76, 0.22), rgba(94, 140, 255, 0.2));
+  color: #ffd59b;
+  font-size: 1.25rem;
+}
+
+.landing-mini-title,
+.landing-step-title {
+  font-size: 1.08rem;
+  margin-bottom: 0.65rem;
+}
+
+.landing-plan-tag,
+.landing-step-number {
+  color: #ffd59b;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landing-plan-title,
+.landing-section-title,
+.landing-cta-title {
+  letter-spacing: -0.03em;
+}
+
+.landing-plan-title {
+  font-size: clamp(1.9rem, 2.4vw, 2.5rem);
+  margin: 1rem 0 0.9rem;
+}
+
+.landing-plan-metric {
+  margin: 1.8rem 0;
+  padding: 1.25rem 1.35rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.landing-plan-metric-value {
+  display: block;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  line-height: 1;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.landing-plan-metric-label {
+  display: block;
+  margin-top: 0.5rem;
+  color: rgba(232, 238, 248, 0.78);
+}
+
+.landing-feature-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.landing-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  color: #f5f7fb;
+}
+
+.landing-feature-item i {
+  color: #74d39d;
+  margin-top: 0.15rem;
+}
+
+.landing-footnote {
+  font-size: 0.95rem;
+}
+
+.landing-section-eyebrow {
+  color: #ffd59b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.landing-section-title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.landing-section-copy {
+  max-width: 32rem;
+}
+
+.landing-step-number {
+  margin-bottom: 0.85rem;
+}
+
+.landing-cta-card {
+  text-align: center;
+}
+
+.landing-cta-title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  max-width: 17ch;
+  margin: 0 auto 1rem;
+}
+
+.landing-cta-text {
+  max-width: 58ch;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+@media (max-width: 991px) {
+  .landing-hero {
+    padding-top: 12px;
+  }
+
+  .landing-title {
+    max-width: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .landing-hero,
+  .landing-section {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .landing-actions {
+    flex-direction: column;
+  }
+
+  .landing-primary-button,
+  .landing-secondary-button {
+    width: 100%;
+  }
+
+  .landing-plan-card,
+  .landing-cta-card,
+  .landing-mini-card,
+  .landing-step-card {
+    border-radius: 24px;
+  }
 }
 
 .App-main > .row {

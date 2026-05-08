@@ -22,13 +22,17 @@ const Login = () => {
       const response = await post("login", { nickname, password });
 
       if (response.user && response.token) {
-        login(response.user, response.token);
+        login(
+          response.user,
+          response.token,
+          response.question_generation_usage || null,
+        );
         navigate("/");
         return;
       }
 
       if (response.user) {
-        login(response.user);
+        login(response.user, null, response.question_generation_usage || null);
         navigate("/");
         return;
       }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { post } from "../helpers/FecthApi";
 import { useAppContext } from "../helpers/ContextApi";
-import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Alert, Button, Card, Col, Row, Spinner } from "react-bootstrap";
 
 const anatomyTopics = [
   { title: "Locomotor", apiName: "Locomotor" },
@@ -11,8 +10,8 @@ const anatomyTopics = [
 ];
 
 const AnatomyQuestionGenerator = () => {
-  const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     setQuestionData,
@@ -20,25 +19,32 @@ const AnatomyQuestionGenerator = () => {
     isLoading,
     setIsLoading,
     resetQuestionData,
+    incrementQuestionGenerationUsage,
+    setQuestionGenerationUsage,
   } = useAppContext();
 
   const generateQuestion = async (topic) => {
     try {
       setIsLoading(true);
+      setErrorMessage("");
+      const response = await post("ai/anatomy", { parameter: topic.apiName });
       resetQuestionState();
       resetQuestionData();
-      const response = await post("ai/anatomy", { parameter: topic.apiName });
-      console.log("Response:", response);
       setQuestionData(response.data);
+      if (response.question_generation_usage) {
+        setQuestionGenerationUsage(response.question_generation_usage);
+      } else {
+        incrementQuestionGenerationUsage();
+      }
     } catch (error) {
+      setErrorMessage(
+        error.response?.data?.detail ||
+          "Nao foi possivel gerar uma nova pergunta no momento.",
+      );
       console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleMoveToHistory = () => {
-    navigate("/questions");
   };
 
   const handleSelectTopic = async (topic) => {
@@ -48,6 +54,7 @@ const AnatomyQuestionGenerator = () => {
 
   const handleChangeTopic = () => {
     setSelectedTopic(null);
+    setErrorMessage("");
     resetQuestionState();
     resetQuestionData();
   };
@@ -62,16 +69,12 @@ const AnatomyQuestionGenerator = () => {
 
   return (
     <Row className="w-100 m-0 p-0 d-flex flex-column align-items-center">
-      <Col xs={12} sm={6} md={4} lg={3}>
-        <Card
-          className="w-100 mx-auto"
-          role="button"
-          onClick={() => handleMoveToHistory()}
-        >
-          <Card.Body>Lista de Perguntas</Card.Body>
-        </Card>
-      </Col>
       <Col className="px-5 pt-4">
+        {errorMessage ? (
+          <Alert variant="warning" className="mb-4">
+            {errorMessage}
+          </Alert>
+        ) : null}
         {!selectedTopic ? (
           <>
             <h5>Choose your anatomy topic</h5>

@@ -25,6 +25,16 @@ const getStoredSelectedInstitution = () => {
   }
 };
 
+const getStoredQuestionGenerationUsage = () => {
+  try {
+    const storedUsage = localStorage.getItem("question_generation_usage");
+    return storedUsage ? JSON.parse(storedUsage) : null;
+  } catch {
+    localStorage.removeItem("question_generation_usage");
+    return null;
+  }
+};
+
 const userHasSubscriptionAccess = (user) => {
   if (!user) {
     return false;
@@ -56,6 +66,9 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [authUser, setAuthUser] = useState(getStoredAuthUser);
   const [selectedInstitution, setSelectedInstitutionState] = useState(getStoredSelectedInstitution);
+  const [questionGenerationUsage, setQuestionGenerationUsageState] = useState(
+    getStoredQuestionGenerationUsage,
+  );
   const [hasSubscriptionAccess, setHasSubscriptionAccess] = useState(() =>
     userHasSubscriptionAccess(getStoredAuthUser()),
   );
@@ -72,6 +85,43 @@ export const AppProvider = ({ children }) => {
 
   const getCurrentUserId = () => {
     return authUser?.user_id || authUser?.id || null;
+  };
+
+  const setQuestionGenerationUsage = (usage) => {
+    if (usage) {
+      localStorage.setItem("question_generation_usage", JSON.stringify(usage));
+    } else {
+      localStorage.removeItem("question_generation_usage");
+    }
+
+    setQuestionGenerationUsageState(usage);
+  };
+
+  const incrementQuestionGenerationUsage = () => {
+    setQuestionGenerationUsageState((currentUsage) => {
+      if (!currentUsage) {
+        const nextUsage = {
+          questions_used: 1,
+          questions_limit: null,
+          questions_remaining: null,
+          cycle_end: null,
+          subscription_status: null,
+        };
+        localStorage.setItem("question_generation_usage", JSON.stringify(nextUsage));
+        return nextUsage;
+      }
+
+      const nextUsage = {
+        ...currentUsage,
+        questions_used: (currentUsage.questions_used || 0) + 1,
+        questions_remaining:
+          typeof currentUsage.questions_remaining === "number"
+            ? Math.max(currentUsage.questions_remaining - 1, 0)
+            : currentUsage.questions_remaining,
+      };
+      localStorage.setItem("question_generation_usage", JSON.stringify(nextUsage));
+      return nextUsage;
+    });
   };
 
   const ensureDefaultInstitution = async () => {
@@ -121,7 +171,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const login = (user, token) => {
+  const login = (user, token, usage = null) => {
     localStorage.setItem("auth_user", JSON.stringify(user));
     if (token) {
       localStorage.setItem("token", token);
@@ -130,15 +180,18 @@ export const AppProvider = ({ children }) => {
     setAuthUser(user);
     setSelectedInstitutionState(null);
     setHasSubscriptionAccess(userHasSubscriptionAccess(user));
+    setQuestionGenerationUsage(usage);
   };
 
   const logout = () => {
     localStorage.removeItem("auth_user");
     localStorage.removeItem("token");
     localStorage.removeItem("selected_institution");
+    localStorage.removeItem("question_generation_usage");
     setAuthUser(null);
     setSelectedInstitutionState(null);
     setHasSubscriptionAccess(false);
+    setQuestionGenerationUsageState(null);
     setCurrentArea(null);
     setQuestions([]);
     setCurrentQuestionIndex(0);
@@ -186,6 +239,9 @@ export const AppProvider = ({ children }) => {
     authUser,
     setAuthUser,
     getCurrentUserId,
+    questionGenerationUsage,
+    setQuestionGenerationUsage,
+    incrementQuestionGenerationUsage,
     selectedInstitution,
     setSelectedInstitution,
     isAuthenticated: Boolean(authUser),

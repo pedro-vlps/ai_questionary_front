@@ -12,7 +12,6 @@ import SubjectSelection from "./pages/SubjectSelection";
 import Header from "./Elements/Header";
 import Footer from "./Elements/Footer";
 import LandingPage from "./pages/LandingPage";
-import QuestionsList from "./pages/QuestionsList";
 
 function AppContent() {
   const { isAuthenticated, hasSelectedInstitution, hasSubscriptionAccess } =
@@ -64,18 +63,6 @@ function AppContent() {
             path="/app"
             element={
               isAuthenticated ? <SubjectSelection /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/questions"
-            element={
-              isAuthenticated && hasSubscriptionAccess && hasSelectedInstitution ? (
-                <QuestionsList />
-              ) : isAuthenticated ? (
-                <Navigate to="/app" />
-              ) : (
-                <Navigate to="/login" />
-              )
             }
           />
         </Routes>
