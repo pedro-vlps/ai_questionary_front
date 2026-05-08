@@ -210,7 +210,6 @@ const LandingPage = () => {
               </Button>
               <Button
                 size="lg"
-                variant="outline-light"
                 className="landing-secondary-button"
                 onClick={() => navigate("/login")}
               >
