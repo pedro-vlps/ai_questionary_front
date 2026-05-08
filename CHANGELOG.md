@@ -1,3 +1,10 @@
+## v1.0.0
+
+- Fixed logout function
+- Removed questions list
+- Created the landing page
+- Implemented question generation counter
+
 ## v0.6.0
 
 - Added payment logic
