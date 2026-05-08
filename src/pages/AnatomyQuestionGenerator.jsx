@@ -3,6 +3,8 @@ import { post } from "../helpers/FecthApi";
 import { useAppContext } from "../helpers/ContextApi";
 import { Alert, Button, Card, Col, Row, Spinner } from "react-bootstrap";
 
+export const canGenerateNextQuestion = (selectedTopic) => Boolean(selectedTopic);
+
 const AnatomyQuestionGenerator = () => {
   const [selectedTopicApiName, setSelectedTopicApiName] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,9 +64,7 @@ const AnatomyQuestionGenerator = () => {
   };
 
   const handleNextQuestion = async () => {
-    if (!selectedTopic) {
-      return;
-    }
+    if (!canGenerateNextQuestion(selectedTopic)) return;
 
     await generateQuestion(selectedTopic);
   };

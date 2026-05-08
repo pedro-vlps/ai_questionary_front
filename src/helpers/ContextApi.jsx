@@ -11,6 +11,12 @@ const AppContext = createContext();
 
 const DEFAULT_INSTITUTION_NAME = "UBA";
 
+export const resolveLanguage = (language) =>
+  SUPPORTED_LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE;
+
+export const resolveLocale = (language) =>
+  LANGUAGE_LOCALES[language] || LANGUAGE_LOCALES.en;
+
 const getStoredAuthUser = () => {
   try {
     const storedUser = localStorage.getItem('auth_user');
@@ -44,9 +50,7 @@ const getStoredQuestionGenerationUsage = () => {
 const getStoredLanguage = () => {
   try {
     const storedLanguage = localStorage.getItem("language");
-    return SUPPORTED_LANGUAGES.includes(storedLanguage)
-      ? storedLanguage
-      : DEFAULT_LANGUAGE;
+    return resolveLanguage(storedLanguage);
   } catch {
     localStorage.removeItem("language");
     return DEFAULT_LANGUAGE;
@@ -93,9 +97,7 @@ export const AppProvider = ({ children }) => {
   );
 
   const setLanguage = (nextLanguage) => {
-    const resolvedLanguage = SUPPORTED_LANGUAGES.includes(nextLanguage)
-      ? nextLanguage
-      : DEFAULT_LANGUAGE;
+    const resolvedLanguage = resolveLanguage(nextLanguage);
     localStorage.setItem("language", resolvedLanguage);
     setLanguageState(resolvedLanguage);
   };
@@ -112,7 +114,7 @@ export const AppProvider = ({ children }) => {
   }, [language]);
 
   const getLocale = useCallback(
-    () => LANGUAGE_LOCALES[language] || LANGUAGE_LOCALES.en,
+    () => resolveLocale(language),
     [language],
   );
 

@@ -1,0 +1,239 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import SubjectSelection from "../../pages/SubjectSelection";
+import { useAppContext } from "../../helpers/ContextApi";
+import { get, post } from "../../helpers/FecthApi.jsx";
+import { createMockAppContext } from "../utils/mockAppContext";
+
+const mockNavigate = jest.fn();
+const originalLocation = window.location;
+
+jest.mock("../../helpers/ContextApi", () => ({
+  useAppContext: jest.fn(),
+}));
+
+jest.mock("../../helpers/FecthApi.jsx", () => ({
+  get: jest.fn(),
+  post: jest.fn(),
+}));
+
+jest.mock("react-router-dom", () => ({
+  useNavigate: () => mockNavigate,
+}), { virtual: true });
+
+describe("SubjectSelection page", () => {
+  beforeAll(() => {
+    delete window.location;
+    window.location = { href: "" };
+  });
+
+  afterAll(() => {
+    window.location = originalLocation;
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    window.location.href = "";
+  });
+
+  test("navigates to the selected subject and to the answers history when access is active", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+        hasSubscriptionAccess: true,
+        selectedInstitution: { id: 1, name: "UBA" },
+        hasSelectedInstitution: true,
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByText("Anatomy"));
+    await userEvent.click(screen.getByRole("button", { name: "View my answers" }));
+
+    expect(mockNavigate).toHaveBeenNthCalledWith(1, "/anatomy");
+    expect(mockNavigate).toHaveBeenNthCalledWith(2, "/answered-questions");
+  });
+
+  test("shows an error when the checkout is requested without an authenticated user id", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        getCurrentUserId: () => null,
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+
+    expect(screen.getByText("Unable to identify the authenticated user.")).toBeInTheDocument();
+  });
+
+  test("shows an informational message when access refresh reports a pending payment", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        refreshSubscriptionAccess: jest.fn().mockResolvedValue(false),
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+
+    expect(await screen.findByText(
+      "Payment is still processing or the subscription has not been released yet.",
+    )).toBeInTheDocument();
+  });
+
+  test("does not show the pending message when access refresh succeeds", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        refreshSubscriptionAccess: jest.fn().mockResolvedValue(true),
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText(
+        "Payment is still processing or the subscription has not been released yet.",
+      )).not.toBeInTheDocument();
+    });
+  });
+
+  test("redirects to checkout when the session is generated successfully", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        getCurrentUserId: () => 99,
+      }),
+    );
+    post.mockResolvedValue({ url_session: "https://checkout.example.com/1" });
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("stripe/generate", { user_id: 99 });
+    });
+    expect(window.location.href).toBe("https://checkout.example.com/1");
+  });
+
+  test("shows checkout and refresh errors", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        getCurrentUserId: () => 99,
+        refreshSubscriptionAccess: jest
+          .fn()
+          .mockRejectedValue({ response: { data: { detail: "Refresh failed" } } }),
+      }),
+    );
+    post.mockResolvedValue({});
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+    expect(await screen.findByText("Unable to start the subscription checkout.")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+    expect(await screen.findByText("Refresh failed")).toBeInTheDocument();
+  });
+
+  test("shows the fallback checkout error when the request throws without a detail message", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        getCurrentUserId: () => 99,
+      }),
+    );
+    post.mockRejectedValue({});
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+
+    expect(await screen.findByText("Unable to start the subscription checkout.")).toBeInTheDocument();
+  });
+
+  test("loads and stores the default institution when one is not selected yet", async () => {
+    const setSelectedInstitution = jest.fn();
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: null,
+        setSelectedInstitution,
+      }),
+    );
+    get.mockResolvedValue({ data: [{ id: 1, name: "UBA" }] });
+
+    render(<SubjectSelection />);
+
+    await waitFor(() => {
+      expect(get).toHaveBeenCalledWith("institutions");
+    });
+    expect(setSelectedInstitution).toHaveBeenCalledWith({ id: 1, name: "UBA" });
+  });
+
+  test("does not store an institution when the default one is not returned by the API", async () => {
+    const setSelectedInstitution = jest.fn();
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: null,
+        setSelectedInstitution,
+      }),
+    );
+    get.mockResolvedValue({ data: [{ id: 2, name: "Other" }] });
+
+    render(<SubjectSelection />);
+
+    await waitFor(() => {
+      expect(get).toHaveBeenCalledWith("institutions");
+    });
+    expect(setSelectedInstitution).not.toHaveBeenCalled();
+  });
+
+  test("skips institution loading when one is already selected and shows account fallback text", () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        authUser: {},
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    expect(get).not.toHaveBeenCalled();
+    expect(screen.getByText("Active account")).toBeInTheDocument();
+  });
+
+  test("shows the fallback refresh error when the request has no detail message", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        hasSubscriptionAccess: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        refreshSubscriptionAccess: jest.fn().mockRejectedValue({}),
+      }),
+    );
+
+    render(<SubjectSelection />);
+
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+
+    expect(await screen.findByText("Unable to verify the subscription status.")).toBeInTheDocument();
+  });
+});
