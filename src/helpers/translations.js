@@ -160,7 +160,7 @@ export const translations = {
     "landing.highlight.multipleChoice.description":
       "Recibe preguntas de anatomia pensadas para repasos rapidos y entrenamiento recurrente.",
     "landing.highlight.essays.title":
-      "Preguntas abiertas generadas y evaluadas por IA (Proximamente)",
+      "preguntas a desarrollar generadas y evaluadas por IA (Proximamente)",
     "landing.highlight.essays.description":
       "Recibe consignas, envia tu respuesta y obten retroalimentacion con puntos de mejora y posibles correcciones de contenido.",
     "landing.highlight.mockExams.title": "Simulacros de examen (Proximamente)",
