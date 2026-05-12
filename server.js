@@ -3,7 +3,17 @@ const path = require("path");
 
 const app = express();
 
-// 📦 Servir o build do React
+app.get("/env-config.js", (req, res) => {
+  res.type("application/javascript");
+  res.send(
+    `window.__APP_CONFIG__ = ${JSON.stringify({
+      REACT_APP_BASE_API_URL: process.env.REACT_APP_BASE_API_URL || "",
+      ENVIRONMENT: process.env.ENVIRONMENT || "",
+    })};`,
+  );
+});
+
+// Serve the React build output.
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/{*path}", (req, res) => {

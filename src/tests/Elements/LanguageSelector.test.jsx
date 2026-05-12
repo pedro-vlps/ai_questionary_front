@@ -22,8 +22,8 @@ describe("LanguageSelector", () => {
 
     expect(screen.getByLabelText("Idioma")).toHaveValue("es");
     expect(screen.getByRole("option", { name: "English" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Espanol" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Portugues" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Español" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Portugués" })).toBeInTheDocument();
 
     await userEvent.selectOptions(screen.getByLabelText("Idioma"), "pt");
 

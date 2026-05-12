@@ -146,7 +146,7 @@ describe("AppProvider", () => {
 
     expect(screen.getByTestId("language")).toHaveTextContent("es");
     expect(screen.getByTestId("translated")).toHaveTextContent(
-      "Tu limite mensual se reiniciara el 10/05/2026.",
+      "Tu límite mensual se reiniciará el 10/05/2026.",
     );
     expect(screen.getByTestId("missing-key")).toHaveTextContent("missing.key");
     expect(screen.getByTestId("formatted-date")).toHaveTextContent("10/05/2026");

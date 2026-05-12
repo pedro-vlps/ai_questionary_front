@@ -1,10 +1,13 @@
 jest.mock("axios");
 
 const ORIGINAL_BASE_URL = process.env.REACT_APP_BASE_API_URL;
+const ORIGINAL_APP_CONFIG = window.__APP_CONFIG__;
 
 const loadFetchApiModule = (...args) => {
   const baseUrl = args.length === 0 ? "https://api.example.com" : args[0];
+  const runtimeConfig = args[1];
   jest.resetModules();
+  window.__APP_CONFIG__ = runtimeConfig;
 
   if (typeof baseUrl === "undefined") {
     delete process.env.REACT_APP_BASE_API_URL;
@@ -25,9 +28,12 @@ describe("FecthApi", () => {
   beforeEach(() => {
     localStorage.clear();
     jest.restoreAllMocks();
+    delete window.__APP_CONFIG__;
   });
 
   afterAll(() => {
+    window.__APP_CONFIG__ = ORIGINAL_APP_CONFIG;
+
     if (typeof ORIGINAL_BASE_URL === "undefined") {
       delete process.env.REACT_APP_BASE_API_URL;
       return;
@@ -61,6 +67,22 @@ describe("FecthApi", () => {
         "Content-Type": "application/json",
         Authorization: "Bearer token-123",
         "x-institution-id": 5,
+      },
+    });
+  });
+
+  test("uses runtime config when the build-time env is unavailable", async () => {
+    const { axios, get } = loadFetchApiModule(undefined, {
+      REACT_APP_BASE_API_URL: "https://runtime.example.com/",
+    });
+    axios.mockResolvedValue({ data: { ok: true } });
+
+    await expect(get("/questions")).resolves.toEqual({ ok: true });
+    expect(axios).toHaveBeenCalledWith({
+      method: "GET",
+      url: "https://runtime.example.com/questions",
+      headers: {
+        "Content-Type": "application/json",
       },
     });
   });

@@ -1,12 +1,17 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_API_URL
-  ? process.env.REACT_APP_BASE_API_URL.replace(/\/$/, "")
-  : "";
+const getBaseUrl = () => {
+  const runtimeBaseUrl =
+    typeof window !== "undefined"
+      ? window.__APP_CONFIG__?.REACT_APP_BASE_API_URL
+      : undefined;
+  const baseUrl = runtimeBaseUrl || process.env.REACT_APP_BASE_API_URL || "";
+  return baseUrl.replace(/\/$/, "");
+};
 
 const buildUrl = (endpoint) => {
   const normalizedEndpoint = endpoint.replace(/^\//, "");
-  return `${BASE_URL}/${normalizedEndpoint}`;
+  return `${getBaseUrl()}/${normalizedEndpoint}`;
 };
 
 const getStoredAuthUser = () => {
@@ -49,7 +54,9 @@ const getInstitutionId = (authUser, selectedInstitution) => {
 };
 
 export const fetchApi = async (endpoint, body = null, method = "GET") => {
-  if (!BASE_URL) {
+  const baseUrl = getBaseUrl();
+
+  if (!baseUrl) {
     throw new Error(
       "REACT_APP_BASE_API_URL is not defined in environment variables",
     );
