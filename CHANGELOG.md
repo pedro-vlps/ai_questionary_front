@@ -1,3 +1,8 @@
+## v1.4.3
+
+- Changed Header Logo for desktop and mobile
+- Changed Favicon
+
 ## v1.4.2
 
 - Adjustments on payment after login
