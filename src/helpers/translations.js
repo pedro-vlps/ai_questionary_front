@@ -20,8 +20,16 @@ export const translations = {
     "header.usageResetDate": "Your monthly limit will reset on {date}.",
     "header.usageResetUnavailable":
       "The monthly reset date is not available yet.",
+    "header.menu": "Menu",
+    "header.limits": "Limits",
+    "header.limitsUsed": "Generated this month",
+    "header.limitsCap": "Monthly limit",
+    "header.limitsReset": "Resets on",
+    "header.limitsUnavailableValue": "Not available",
+    "header.language": "Language",
     "header.home": "Home",
     "header.myAnswers": "My answers",
+    "header.feedback": "Feedback",
     "header.logOut": "Log out",
 
     "footer.developedBy": "Developed by Pedro Vieira",
@@ -59,7 +67,36 @@ export const translations = {
     "login.showPassword": "Show password",
     "login.signingIn": "Signing in...",
     "login.signIn": "Sign in",
+    "login.forgotPassword": "Forgot password?",
     "login.createAccount": "Create account",
+    "password.requirements":
+      "Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.",
+
+    "forgotPassword.title": "Forgot your password?",
+    "forgotPassword.description":
+      "Enter the email linked to your account and we will send you a password reset link.",
+    "forgotPassword.email": "Email",
+    "forgotPassword.submit": "Send reset link",
+    "forgotPassword.submitting": "Sending...",
+    "forgotPassword.success":
+      "If the email exists, password reset instructions have been generated.",
+    "forgotPassword.failed":
+      "Unable to start password recovery right now.",
+    "forgotPassword.backToLogin": "Back to login",
+
+    "resetPassword.title": "Reset password",
+    "resetPassword.description":
+      "Choose a new password to finish recovering your account.",
+    "resetPassword.newPassword": "New password",
+    "resetPassword.confirmPassword": "Confirm new password",
+    "resetPassword.submit": "Update password",
+    "resetPassword.submitting": "Updating...",
+    "resetPassword.success": "Password updated successfully.",
+    "resetPassword.failed": "Unable to update your password right now.",
+    "resetPassword.invalidToken":
+      "The password reset link is invalid or has already been used.",
+    "resetPassword.passwordMismatch": "The passwords do not match.",
+    "resetPassword.backToLogin": "Back to login",
 
     "register.userNotIdentified": "Unable to identify the created user.",
     "register.successRedirect":
@@ -106,7 +143,7 @@ export const translations = {
     "subjectSelection.chooseSubject": "Choose your subject",
     "subjectSelection.viewMyAnswers": "View my answers",
 
-    "anatomy.topic.locomotor": "Locomotor system",
+    "anatomy.topic.locomotor": "Locomotor",
     "anatomy.topic.splanchnology": "Splanchnology",
     "anatomy.topic.neuroanatomy": "Neuroanatomy",
     "anatomy.generateFailed": "Unable to generate a new question right now.",
@@ -137,6 +174,20 @@ export const translations = {
     "answeredQuestions.table.yourAnswer": "Your answer",
     "answeredQuestions.table.correctAnswer": "Correct answer",
     "answeredQuestions.table.answeredAt": "Answered at",
+
+    "feedback.userNotIdentified":
+      "Unable to identify the authenticated user.",
+    "feedback.title": "Send feedback",
+    "feedback.description":
+      "Share suggestions, ideas, or issues you noticed while using the platform.",
+    "feedback.label": "Your feedback",
+    "feedback.placeholder":
+      "Tell us what would make the platform better for you.",
+    "feedback.submit": "Send feedback",
+    "feedback.submitting": "Sending...",
+    "feedback.success": "Thanks! Your feedback has been sent.",
+    "feedback.failed": "Unable to send your feedback right now.",
+    "feedback.backToHome": "Back to home",
   },
   es: {
     "language.label": "Idioma",
@@ -149,8 +200,16 @@ export const translations = {
     "header.usageResetDate": "Tu límite mensual se reiniciará el {date}.",
     "header.usageResetUnavailable":
       "La fecha de renovación del límite mensual todavía no está disponible.",
+    "header.menu": "Menu",
+    "header.limits": "Limites",
+    "header.limitsUsed": "Generadas este mes",
+    "header.limitsCap": "Limite mensual",
+    "header.limitsReset": "Se reinicia el",
+    "header.limitsUnavailableValue": "No disponible",
+    "header.language": "Idioma",
     "header.home": "Inicio",
     "header.myAnswers": "Mis respuestas",
+    "header.feedback": "Feedback",
     "header.logOut": "Cerrar sesión",
 
     "footer.developedBy": "Desarrollado por Pedro Vieira",
@@ -191,7 +250,37 @@ export const translations = {
     "login.showPassword": "Mostrar contraseña",
     "login.signingIn": "Ingresando...",
     "login.signIn": "Entrar",
+    "login.forgotPassword": "Olvide mi contrasena",
     "login.createAccount": "Crear cuenta",
+    "password.requirements":
+      "La contrasena debe tener al menos 8 caracteres e incluir una letra mayuscula, una minuscula, un numero y un caracter especial.",
+
+    "forgotPassword.title": "Olvidaste tu contrasena?",
+    "forgotPassword.description":
+      "Ingresa el email vinculado a tu cuenta y te enviaremos un enlace para restablecer tu contrasena.",
+    "forgotPassword.email": "Email",
+    "forgotPassword.submit": "Enviar enlace de recuperacion",
+    "forgotPassword.submitting": "Enviando...",
+    "forgotPassword.success":
+      "Si el email existe, ya se generaron las instrucciones para restablecer la contrasena.",
+    "forgotPassword.failed":
+      "No fue posible iniciar la recuperacion de contrasena en este momento.",
+    "forgotPassword.backToLogin": "Volver al login",
+
+    "resetPassword.title": "Restablecer contrasena",
+    "resetPassword.description":
+      "Elige una nueva contrasena para terminar de recuperar tu cuenta.",
+    "resetPassword.newPassword": "Nueva contrasena",
+    "resetPassword.confirmPassword": "Confirmar nueva contrasena",
+    "resetPassword.submit": "Actualizar contrasena",
+    "resetPassword.submitting": "Actualizando...",
+    "resetPassword.success": "Contrasena actualizada con exito.",
+    "resetPassword.failed":
+      "No fue posible actualizar tu contrasena en este momento.",
+    "resetPassword.invalidToken":
+      "El enlace para restablecer la contrasena es invalido o ya fue usado.",
+    "resetPassword.passwordMismatch": "Las contrasenas no coinciden.",
+    "resetPassword.backToLogin": "Volver al login",
 
     "register.userNotIdentified":
       "No fue posible identificar al usuario creado.",
@@ -239,7 +328,7 @@ export const translations = {
     "subjectSelection.chooseSubject": "Elige tu materia",
     "subjectSelection.viewMyAnswers": "Ver mis respuestas",
 
-    "anatomy.topic.locomotor": "Sistema locomotor",
+    "anatomy.topic.locomotor": "Locomotor",
     "anatomy.topic.splanchnology": "Esplacnología",
     "anatomy.topic.neuroanatomy": "Neuroanatomía",
     "anatomy.generateFailed":
@@ -274,50 +363,72 @@ export const translations = {
     "answeredQuestions.table.yourAnswer": "Tu respuesta",
     "answeredQuestions.table.correctAnswer": "Respuesta correcta",
     "answeredQuestions.table.answeredAt": "Respondida el",
+
+    "feedback.userNotIdentified":
+      "No fue posible identificar al usuario autenticado.",
+    "feedback.title": "Enviar feedback",
+    "feedback.description":
+      "Comparte sugerencias, ideas o problemas que notaste mientras usabas la plataforma.",
+    "feedback.label": "Tu feedback",
+    "feedback.placeholder":
+      "Cuentanos que mejoraria tu experiencia en la plataforma.",
+    "feedback.submit": "Enviar feedback",
+    "feedback.submitting": "Enviando...",
+    "feedback.success": "Gracias! Tu feedback fue enviado.",
+    "feedback.failed": "No fue posible enviar tu feedback en este momento.",
+    "feedback.backToHome": "Volver al inicio",
   },
   pt: {
     "language.label": "Idioma",
     "language.option.en": "English",
     "language.option.es": "Espanol",
-    "language.option.pt": "Portugues",
+    "language.option.pt": "Português",
 
     "header.logoAlt": "Logo do projeto",
-    "header.questionsThisMonth": "Questoes no mes",
-    "header.usageResetDate": "Seu limite mensal sera renovado em {date}.",
+    "header.questionsThisMonth": "Questões no mês",
+    "header.usageResetDate": "Seu limite mensal será renovado em {date}.",
     "header.usageResetUnavailable":
-      "A data de renovacao do limite mensal ainda nao esta disponivel.",
-    "header.home": "Inicio",
+      "A data de renovação do limite mensal ainda não está disponível.",
+    "header.menu": "Menu",
+    "header.limits": "Limites",
+    "header.limitsUsed": "Geradas no mês",
+    "header.limitsCap": "Limite mensal",
+    "header.limitsReset": "Renova em",
+    "header.limitsUnavailableValue": "Não disponível",
+    "header.language": "Idioma",
+    "header.home": "Início",
     "header.myAnswers": "Minhas respostas",
+    "header.feedback": "Feedback",
     "header.logOut": "Sair",
 
     "footer.developedBy": "Desenvolvido por Pedro Vieira",
 
     "landing.highlight.multipleChoice.title":
-      "Questoes de multipla escolha geradas por IA",
+      "Questões de múltipla escolha geradas por IA",
     "landing.highlight.multipleChoice.description":
-      "Receba perguntas de anatomia pensadas para revisao rapida e treino recorrente.",
+      "Receba perguntas de anatomia pensadas para revisão rápida e treino recorrente.",
     "landing.highlight.essays.title":
-      "Questoes discursivas geradas e avaliadas por IA (Em breve)",
+      "Questões discursivas geradas e avaliadas por IA (Em breve)",
     "landing.highlight.essays.description":
-      "Receba enunciados, envie sua resposta e receba feedback com pontos de melhoria e possiveis correcoes de conteudo.",
+      "Receba enunciados, envie sua resposta e receba feedback com pontos de melhoria e possíveis correções de conteúdo.",
     "landing.highlight.mockExams.title": "Simulados (Em breve)",
     "landing.highlight.mockExams.description":
-      "Responda perguntas em sequencia para simular o comportamento de provas reais.",
-    "landing.feature.questionLimit": "Ate 150 geracoes de perguntas por mes",
+      "Responda perguntas em sequência para simular o comportamento de provas reais.",
+    "landing.feature.questionLimit": "Até 150 gerações de perguntas por mês",
     "landing.subject.anatomy": "Anatomia",
     "landing.subject.histology": "Histologia (Em breve)",
     "landing.subject.embryology": "Embriologia (Em breve)",
     "landing.subject.molecularBiology": "Biologia molecular (Em breve)",
-    "landing.subject.genetics": "Genetica (Em breve)",
+    "landing.subject.genetics": "Genética (Em breve)",
     "landing.title": "UBA Trainer",
     "landing.subtitle":
       "Uma plataforma para treinar para as suas provas de anatomia da UBA.",
-    "landing.planTitle": "Plano Basico",
-    "landing.subjectsTitle": "Materias disponiveis no aplicativo",
+    "landing.planTitle": "Plano Básico",
+    "landing.subjectsTitle": "Matérias disponíveis no aplicativo",
     "landing.createAccount": "Criar conta e assinar",
-    "landing.alreadyHaveAccount": "Ja tenho conta",
+    "landing.alreadyHaveAccount": "Já tenho conta",
 
-    "login.invalidServerResponse": "Resposta invalida do servidor.",
+    "login.invalidServerResponse": "Resposta inválida do servidor.",
     "login.failed":
       "O login falhou. Verifique suas credenciais e tente novamente.",
     "login.title": "Login",
@@ -327,15 +438,45 @@ export const translations = {
     "login.showPassword": "Mostrar senha",
     "login.signingIn": "Entrando...",
     "login.signIn": "Entrar",
+    "login.forgotPassword": "Esqueci minha senha",
     "login.createAccount": "Criar conta",
+    "password.requirements":
+      "A senha deve ter pelo menos 8 caracteres e incluir uma letra maiúscula, uma minúscula, um número e um caractere especial.",
+
+    "forgotPassword.title": "Esqueceu sua senha?",
+    "forgotPassword.description":
+      "Informe o email vinculado à sua conta e enviaremos um link para redefinir sua senha.",
+    "forgotPassword.email": "Email",
+    "forgotPassword.submit": "Enviar link de redefinição",
+    "forgotPassword.submitting": "Enviando...",
+    "forgotPassword.success":
+      "Se o email existir, as instruções de redefinição de senha foram geradas.",
+    "forgotPassword.failed":
+      "Não foi possível iniciar a recuperação de senha no momento.",
+    "forgotPassword.backToLogin": "Voltar para o login",
+
+    "resetPassword.title": "Redefinir senha",
+    "resetPassword.description":
+      "Escolha uma nova senha para concluir a recuperação da sua conta.",
+    "resetPassword.newPassword": "Nova senha",
+    "resetPassword.confirmPassword": "Confirmar nova senha",
+    "resetPassword.submit": "Atualizar senha",
+    "resetPassword.submitting": "Atualizando...",
+    "resetPassword.success": "Senha atualizada com sucesso.",
+    "resetPassword.failed":
+      "Não foi possível atualizar sua senha no momento.",
+    "resetPassword.invalidToken":
+      "O link de redefinição de senha é inválido ou já foi usado.",
+    "resetPassword.passwordMismatch": "As senhas não coincidem.",
+    "resetPassword.backToLogin": "Voltar para o login",
 
     "register.userNotIdentified":
-      "Nao foi possivel identificar o usuario criado.",
+      "Não foi possível identificar o usuário criado.",
     "register.successRedirect":
       "Cadastro realizado com sucesso. Redirecionando para o checkout...",
     "register.checkoutStartFailed":
-      "Nao foi possivel iniciar o checkout da assinatura.",
-    "register.failed": "Nao foi possivel concluir o cadastro.",
+      "Não foi possível iniciar o checkout da assinatura.",
+    "register.failed": "Não foi possível concluir o cadastro.",
     "register.title": "Cadastro",
     "register.name": "Nome",
     "register.email": "Email",
@@ -348,67 +489,81 @@ export const translations = {
     "register.backToLogin": "Voltar para o login",
 
     "subjectSelection.userNotIdentified":
-      "Nao foi possivel identificar o usuario autenticado.",
+      "Não foi possível identificar o usuário autenticado.",
     "subjectSelection.checkoutStartFailed":
-      "Nao foi possivel iniciar o checkout da assinatura.",
+      "Não foi possível iniciar o checkout da assinatura.",
     "subjectSelection.paymentPending":
-      "O pagamento ainda esta em processamento ou a assinatura ainda nao foi liberada.",
+      "O pagamento ainda está em processamento ou a assinatura ainda não foi liberada.",
     "subjectSelection.subscriptionStatusFailed":
-      "Nao foi possivel verificar o status da assinatura.",
+      "Não foi possível verificar o status da assinatura.",
     "subjectSelection.pendingBadge": "Assinatura pendente",
     "subjectSelection.pendingTitle": "Ative seu acesso para usar a plataforma",
     "subjectSelection.pendingDescription":
-      "Seu login ja esta liberado. Para usar as rotas protegidas do aplicativo, finalize a assinatura no Stripe e depois atualize o status do acesso.",
-    "subjectSelection.planLabel": "Plano Basico UBA",
+      "Seu login já está liberado. Para usar as rotas protegidas do aplicativo, finalize a assinatura no Stripe e depois atualize o status do acesso.",
+    "subjectSelection.planLabel": "Plano Básico UBA",
     "subjectSelection.step1Title": "1. Concluir pagamento",
     "subjectSelection.step1Description":
-      "Gere a sessao de checkout e finalize a assinatura com o Stripe.",
+      "Gere a sessão de checkout e finalize a assinatura com o Stripe.",
     "subjectSelection.openingCheckout": "Abrindo checkout...",
     "subjectSelection.subscribeNow": "Assinar agora",
     "subjectSelection.step2Title": "2. Liberar acesso",
     "subjectSelection.step2Description":
-      "Depois do pagamento, verifique se a API ja recebeu os eventos do Stripe.",
+      "Depois do pagamento, verifique se a API já recebeu os eventos do Stripe.",
     "subjectSelection.checking": "Verificando...",
-    "subjectSelection.alreadyPaid": "Ja paguei, verificar acesso",
-    "subjectSelection.connectedUser": "Usuario conectado:",
+    "subjectSelection.alreadyPaid": "Já paguei, verificar acesso",
+    "subjectSelection.connectedUser": "Usuário conectado:",
     "subjectSelection.activeAccount": "Conta ativa",
-    "subjectSelection.chooseSubject": "Escolha sua materia",
+    "subjectSelection.chooseSubject": "Escolha sua matéria",
     "subjectSelection.viewMyAnswers": "Ver minhas respostas",
 
-    "anatomy.topic.locomotor": "Sistema locomotor",
+    "anatomy.topic.locomotor": "Locomotor",
     "anatomy.topic.splanchnology": "Esplacnologia",
     "anatomy.topic.neuroanatomy": "Neuroanatomia",
     "anatomy.generateFailed":
-      "Nao foi possivel gerar uma nova pergunta no momento.",
+      "Não foi possível gerar uma nova pergunta no momento.",
     "anatomy.chooseTopic": "Escolha seu tema de anatomia",
     "anatomy.selectedTopic": "Tema selecionado:",
     "anatomy.changeTopic": "Trocar tema",
-    "anatomy.nextQuestion": "Proxima pergunta",
+    "anatomy.nextQuestion": "Próxima pergunta",
 
     "question.userNotIdentified":
-      "Nao foi possivel identificar o usuario autenticado.",
+      "Não foi possível identificar o usuário autenticado.",
     "question.saveFailed":
-      "Nao foi possivel salvar sua resposta. Tente novamente.",
+      "Não foi possível salvar sua resposta. Tente novamente.",
     "question.savingAnswer": "Salvando sua resposta...",
     "question.correct": "Correta:",
     "question.yourAnswer": "Sua resposta:",
 
     "answeredQuestions.userNotIdentified":
-      "Nao foi possivel identificar o usuario autenticado.",
+      "Não foi possível identificar o usuário autenticado.",
     "answeredQuestions.loadFailed":
-      "Nao foi possivel carregar suas respostas no momento.",
-    "answeredQuestions.badge": "Historico do usuario",
-    "answeredQuestions.title": "Questoes respondidas",
+      "Não foi possível carregar suas respostas no momento.",
+    "answeredQuestions.badge": "Histórico do usuário",
+    "answeredQuestions.title": "Questões respondidas",
     "answeredQuestions.subtitle":
-      "Veja a ultima resposta salva em cada questao que voce ja respondeu.",
-    "answeredQuestions.countLabel": "questoes registradas",
+      "Veja a última resposta salva em cada questão que você já respondeu.",
+    "answeredQuestions.countLabel": "questões registradas",
     "answeredQuestions.emptyTitle": "Nenhuma resposta encontrada",
     "answeredQuestions.emptySubtitle":
-      "Assim que voce responder uma pergunta, ela vai aparecer aqui.",
-    "answeredQuestions.table.question": "Questao",
-    "answeredQuestions.table.subject": "Materia",
+      "Assim que você responder uma pergunta, ela vai aparecer aqui.",
+    "answeredQuestions.table.question": "Questão",
+    "answeredQuestions.table.subject": "Matéria",
     "answeredQuestions.table.yourAnswer": "Sua resposta",
     "answeredQuestions.table.correctAnswer": "Resposta correta",
     "answeredQuestions.table.answeredAt": "Respondida em",
+
+    "feedback.userNotIdentified":
+      "Não foi possível identificar o usuário autenticado.",
+    "feedback.title": "Enviar feedback",
+    "feedback.description":
+      "Compartilhe sugestões, ideias ou problemas que você percebeu ao usar a plataforma.",
+    "feedback.label": "Seu feedback",
+    "feedback.placeholder":
+      "Conte o que deixaria a plataforma melhor para você.",
+    "feedback.submit": "Enviar feedback",
+    "feedback.submitting": "Enviando...",
+    "feedback.success": "Obrigado! Seu feedback foi enviado.",
+    "feedback.failed": "Não foi possível enviar seu feedback no momento.",
+    "feedback.backToHome": "Voltar para o início",
   },
 };

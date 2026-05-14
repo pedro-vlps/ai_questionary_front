@@ -1,3 +1,27 @@
+## v1.4.3
+
+- Changed Header Logo for desktop and mobile
+- Changed Favicon
+
+## v1.4.2
+
+- Adjustments on payment after login
+- Fixed some portuguese translations
+
+## v1.4.1
+
+- Visual Adjustments on Header
+
+## v1.4.0
+
+- Added forgot password and reset password page
+- Added a Feedback page
+- Added a validation to all password creation to improve more secure passwords
+
+## v1.3.0
+
+- Visual improvements to the questions page
+
 ## v1.2.1
 
 - Adjustments on Docker file to fix deploy issues

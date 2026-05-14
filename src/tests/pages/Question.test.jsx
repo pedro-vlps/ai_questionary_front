@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Question from "../../pages/Question";
 import { useAppContext } from "../../helpers/ContextApi";
@@ -117,7 +117,7 @@ describe("Question page", () => {
     expect(post).not.toHaveBeenCalled();
   });
 
-  test("renders answer explanations after a result is available", () => {
+  test("renders answer explanations grouped beneath each answer after a result is available", () => {
     useAppContext.mockReturnValue(
       createMockAppContext({
         questionData,
@@ -131,6 +131,14 @@ describe("Question page", () => {
     expect(screen.getByText("Correct: The femur is the thigh bone.")).toBeInTheDocument();
     expect(screen.getByText("Your answer: The tibia is in the leg.")).toBeInTheDocument();
     expect(screen.getByText("The ulna is in the forearm.")).toBeInTheDocument();
+
+    const answerAGroup = screen.getByRole("button", { name: /A\) Tibia/i }).closest(".question-answer-stack");
+    const answerBGroup = screen.getByRole("button", { name: /B\) Femur/i }).closest(".question-answer-stack");
+    const answerCGroup = screen.getByRole("button", { name: /C\) Ulna/i }).closest(".question-answer-stack");
+
+    expect(within(answerAGroup).getByText("Your answer: The tibia is in the leg.")).toBeInTheDocument();
+    expect(within(answerBGroup).getByText("Correct: The femur is the thigh bone.")).toBeInTheDocument();
+    expect(within(answerCGroup).getByText("The ulna is in the forearm.")).toBeInTheDocument();
   });
 
   test("renders an optional fifth answer when present", () => {

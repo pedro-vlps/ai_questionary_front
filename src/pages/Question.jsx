@@ -119,66 +119,83 @@ const Question = () => {
     return {};
   };
 
+  const getExplanationPresentation = (answer) => {
+    if (answer.letter === correctAnswer) {
+      return {
+        className: "question-answer-explanation question-answer-explanation-correct",
+        style: { color: "#4CAF50" },
+        text: `${t("question.correct")} ${answer.explanation ?? ""}`,
+      };
+    }
+
+    if (answer.letter === selectedAnswer) {
+      return {
+        className: "question-answer-explanation question-answer-explanation-selected",
+        style: { color: "#f44336" },
+        text: `${t("question.yourAnswer")} ${answer.explanation ?? ""}`,
+      };
+    }
+
+    return {
+      className: "question-answer-explanation question-answer-explanation-neutral",
+      style: { color: "#eeeeee" },
+      text: answer.explanation ?? "",
+    };
+  };
+
   return (
-    <Row className="w-100 m-0 p-0">
-      <Col className="px-5 pt-4">
-        <h2>{questionData.question}</h2>
-        {errorMessage ? (
-          <Alert variant="danger" className="mb-4">
-            {errorMessage}
-          </Alert>
-        ) : null}
-        <Row className="g-3 justify-content-center">
-          {answers.map((answer) => (
-            <Col key={answer.letter} xs={12} md={10} lg={8} className="d-flex">
-              <button
-                type="button"
-                className="card w-100 text-start"
-                onClick={() => handleAnswerClick(answer.letter)}
-                disabled={showResult || isSavingAnswer}
-                style={getButtonStyle(answer.letter)}
-              >
-                <span className="card-body">
-                  {answer.letter}) {answer.text}
-                </span>
-              </button>
-            </Col>
-          ))}
-        </Row>
-        {isSavingAnswer ? (
-          <div className="d-flex justify-content-center align-items-center gap-2 mt-4">
-            <Spinner animation="border" size="sm" variant="primary" />
-            <span>{t("question.savingAnswer")}</span>
-          </div>
-        ) : null}
-        {showResult ? (
-          <div>
-            {answers.map((answer) => (
-              <div key={answer.letter} style={{ marginTop: "10px" }}>
-                <strong>
-                  {answer.letter}) {answer.text}
-                </strong>
-                {answer.letter === correctAnswer ? (
-                  <p style={{ color: "#4CAF50" }}>
-                    {t("question.correct")} {answer.explanation}
-                  </p>
-                ) : null}
-                {answer.letter === selectedAnswer &&
-                answer.letter !== correctAnswer ? (
-                  <p style={{ color: "#f44336" }}>
-                    {t("question.yourAnswer")} {answer.explanation}
-                  </p>
-                ) : null}
-                {answer.letter !== correctAnswer &&
-                answer.letter !== selectedAnswer ? (
-                  <p style={{ color: "#eeeeee" }}>{answer.explanation}</p>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </Col>
-    </Row>
+    <section className="question-page">
+      <Row className="w-100 m-0 p-0">
+        <Col className="question-shell">
+          <h2 className="question-title">{questionData.question}</h2>
+          {errorMessage ? (
+            <Alert variant="danger" className="mb-4">
+              {errorMessage}
+            </Alert>
+          ) : null}
+          <Row className="g-3 justify-content-center question-answers-row">
+            {answers.map((answer) => {
+              const explanationPresentation = getExplanationPresentation(answer);
+
+              return (
+                <Col key={answer.letter} xs={12} md={10} lg={8} className="d-flex">
+                  <div className="question-answer-stack w-100">
+                    <button
+                      type="button"
+                      className="question-answer-button card w-100 text-start"
+                      onClick={() => handleAnswerClick(answer.letter)}
+                      disabled={showResult || isSavingAnswer}
+                      style={getButtonStyle(answer.letter)}
+                    >
+                      <span className="question-answer-body">
+                        {answer.letter}) {answer.text}
+                      </span>
+                    </button>
+                    {showResult ? (
+                      <div
+                        className={explanationPresentation.className}
+                        style={explanationPresentation.style}
+                        data-testid={`answer-explanation-${answer.letter}`}
+                      >
+                        <p className="question-answer-explanation-text">
+                          {explanationPresentation.text}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
+          {isSavingAnswer ? (
+            <div className="d-flex justify-content-center align-items-center gap-2 mt-4">
+              <Spinner animation="border" size="sm" variant="primary" />
+              <span>{t("question.savingAnswer")}</span>
+            </div>
+          ) : null}
+        </Col>
+      </Row>
+    </section>
   );
 };
 
