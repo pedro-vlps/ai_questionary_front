@@ -1,8 +1,11 @@
 import Logo from "../Images/Logo.png";
-import { useState } from "react";
+import ShortLogo from "../Images/short_logo.png";
+import { useEffect, useState } from "react";
 import { Col, Dropdown, Row } from "react-bootstrap";
 import { useAppContext } from "../helpers/ContextApi";
 import { useNavigate } from "react-router-dom";
+
+const MOBILE_BREAKPOINT = 576;
 
 const Header = () => {
   const {
@@ -18,6 +21,36 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLimitsMenuOpen, setIsLimitsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.innerWidth <= MOBILE_BREAKPOINT;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const updateViewport = (event) => {
+      setIsMobileView(event.matches);
+    };
+
+    setIsMobileView(mediaQuery.matches);
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateViewport);
+
+      return () => mediaQuery.removeEventListener("change", updateViewport);
+    }
+
+    mediaQuery.addListener(updateViewport);
+
+    return () => mediaQuery.removeListener(updateViewport);
+  }, []);
 
   const closeMenus = () => {
     setIsMenuOpen(false);
@@ -54,7 +87,11 @@ const Header = () => {
       {isAuthenticated ? (
         <>
           <Col xs="auto" className="d-flex align-items-center">
-            <img src={Logo} alt={t("header.logoAlt")} className="header-logo" />
+            <img
+              src={isMobileView ? ShortLogo : Logo}
+              alt={t("header.logoAlt")}
+              className={`header-logo${isMobileView ? " header-logo-mobile" : ""}`}
+            />
           </Col>
           <Col xs="auto" className="d-flex align-items-center ms-auto">
             <Dropdown
@@ -184,8 +221,8 @@ const Header = () => {
                     </button>
                   </div>
                 ) : null}
-                <Dropdown.Item onClick={handleLogout}>
-                  <i className="bi bi-box-arrow-right me-2" aria-hidden="true" />
+                <Dropdown.Item onClick={handleLogout} className="text-danger">
+                  <i className="bi bi-box-arrow-right me-2 text-danger" aria-hidden="true" />
                   {t("header.logOut")}
                 </Dropdown.Item>
               </Dropdown.Menu>

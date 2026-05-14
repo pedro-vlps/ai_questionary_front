@@ -88,6 +88,10 @@
   height: auto;
 }
 
+.header-logo-mobile {
+  max-width: min(72px, 18vw);
+}
+
 .header-menu-toggle-label {
   display: inline;
 }
