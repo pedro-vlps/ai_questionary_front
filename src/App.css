@@ -88,6 +88,13 @@
   height: auto;
 }
 
+.header-logo-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
 .header-logo-mobile {
   max-width: min(72px, 18vw);
 }

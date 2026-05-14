@@ -6,6 +6,8 @@ import { useAppContext } from "../helpers/ContextApi";
 import { useNavigate } from "react-router-dom";
 
 const MOBILE_BREAKPOINT = 576;
+const getIsMobileViewport = () =>
+  typeof window !== "undefined" && window.innerWidth <= MOBILE_BREAKPOINT;
 
 const Header = () => {
   const {
@@ -21,25 +23,30 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLimitsMenuOpen, setIsLimitsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    return window.innerWidth <= MOBILE_BREAKPOINT;
-  });
+  const [isMobileView, setIsMobileView] = useState(getIsMobileViewport);
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return undefined;
     }
 
+    if (typeof window.matchMedia !== "function") {
+      const updateViewport = () => {
+        setIsMobileView(getIsMobileViewport());
+      };
+
+      updateViewport();
+      window.addEventListener("resize", updateViewport);
+
+      return () => window.removeEventListener("resize", updateViewport);
+    }
+
     const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
     const updateViewport = (event) => {
-      setIsMobileView(event.matches);
+      setIsMobileView(event?.matches ?? mediaQuery.matches);
     };
 
-    setIsMobileView(mediaQuery.matches);
+    updateViewport();
 
     if (typeof mediaQuery.addEventListener === "function") {
       mediaQuery.addEventListener("change", updateViewport);
@@ -87,11 +94,17 @@ const Header = () => {
       {isAuthenticated ? (
         <>
           <Col xs="auto" className="d-flex align-items-center">
-            <img
-              src={isMobileView ? ShortLogo : Logo}
-              alt={t("header.logoAlt")}
-              className={`header-logo${isMobileView ? " header-logo-mobile" : ""}`}
-            />
+            <button
+              type="button"
+              className="header-logo-button"
+              onClick={() => handleNavigate("/app")}
+            >
+              <img
+                src={isMobileView ? ShortLogo : Logo}
+                alt={t("header.logoAlt")}
+                className={`header-logo${isMobileView ? " header-logo-mobile" : ""}`}
+              />
+            </button>
           </Col>
           <Col xs="auto" className="d-flex align-items-center ms-auto">
             <Dropdown

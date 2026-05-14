@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LanguageSelector from "../../Elements/LanguageSelector";
 import { useAppContext } from "../../helpers/ContextApi";
+import { translations } from "../../helpers/translations";
 import { createMockAppContext } from "../utils/mockAppContext";
 
 jest.mock("../../helpers/ContextApi", () => ({
@@ -28,9 +29,15 @@ describe("LanguageSelector", () => {
     expect(select).not.toHaveClass("language-selector-input-embedded");
     expect(wrapper).toHaveClass("language-selector-shell");
     expect(wrapper).not.toHaveClass("language-selector-shell-embedded");
-    expect(screen.getByRole("option", { name: "English" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Español" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Portugués" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: translations.es["language.option.en"] }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: translations.es["language.option.es"] }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: translations.es["language.option.pt"] }),
+    ).toBeInTheDocument();
 
     await userEvent.selectOptions(select, "pt");
 

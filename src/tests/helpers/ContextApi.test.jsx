@@ -8,6 +8,7 @@ import {
   useAppContext,
 } from "../../helpers/ContextApi";
 import { get } from "../../helpers/FecthApi.jsx";
+import { translations } from "../../helpers/translations";
 
 jest.mock("../../helpers/FecthApi.jsx", () => ({
   get: jest.fn(),
@@ -133,6 +134,15 @@ const renderHarness = () =>
   );
 
 describe("AppProvider", () => {
+  const usageResetDateEs = translations.es["header.usageResetDate"].replace(
+    "{date}",
+    "10/05/2026",
+  );
+  const usageResetDatePt = translations.pt["header.usageResetDate"].replace(
+    "{date}",
+    "10/05/2026",
+  );
+
   beforeEach(() => {
     localStorage.clear();
     jest.clearAllMocks();
@@ -145,9 +155,7 @@ describe("AppProvider", () => {
     renderHarness();
 
     expect(screen.getByTestId("language")).toHaveTextContent("es");
-    expect(screen.getByTestId("translated")).toHaveTextContent(
-      "Tu límite mensual se reiniciará el 10/05/2026.",
-    );
+    expect(screen.getByTestId("translated")).toHaveTextContent(usageResetDateEs);
     expect(screen.getByTestId("missing-key")).toHaveTextContent("missing.key");
     expect(screen.getByTestId("formatted-date")).toHaveTextContent("10/05/2026");
     expect(screen.getByTestId("formatted-date-empty")).toHaveTextContent("null");
@@ -158,9 +166,7 @@ describe("AppProvider", () => {
 
     expect(screen.getByTestId("language")).toHaveTextContent("pt");
     expect(localStorage.getItem("language")).toBe("pt");
-    expect(screen.getByTestId("translated")).toHaveTextContent(
-      "Seu limite mensal será renovado em 10/05/2026.",
-    );
+    expect(screen.getByTestId("translated")).toHaveTextContent(usageResetDatePt);
   });
 
   test("initializes with a supported persisted language", () => {
