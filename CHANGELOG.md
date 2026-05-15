@@ -1,3 +1,7 @@
+## v1.5.0
+
+- Changed the payment format from signature to package
+
 ## v1.4.3
 
 - Changed Header Logo for desktop and mobile

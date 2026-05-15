@@ -41,6 +41,7 @@ describe("SubjectSelection page", () => {
       createMockAppContext({
         isAuthenticated: true,
         hasSubscriptionAccess: true,
+        hasQuestionPackageAvailable: true,
         selectedInstitution: { id: 1, name: "UBA" },
         hasSelectedInstitution: true,
       }),
@@ -66,7 +67,7 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+    await userEvent.click(screen.getByRole("button", { name: "Buy package now" }));
 
     expect(screen.getByText("Unable to identify the authenticated user.")).toBeInTheDocument();
   });
@@ -82,10 +83,10 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, refresh access" }));
 
     expect(await screen.findByText(
-      "Payment is still processing or the subscription has not been released yet.",
+      "Payment is still processing or your package has not been released yet.",
     )).toBeInTheDocument();
   });
 
@@ -100,11 +101,11 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, refresh access" }));
 
     await waitFor(() => {
       expect(screen.queryByText(
-        "Payment is still processing or the subscription has not been released yet.",
+        "Payment is still processing or your package has not been released yet.",
       )).not.toBeInTheDocument();
     });
   });
@@ -123,13 +124,43 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+    await userEvent.click(screen.getByRole("button", { name: "Buy package now" }));
 
     await waitFor(() => {
       expect(post).toHaveBeenCalledWith("stripe/generate", { user_id: 99 });
     });
     expect(logout).toHaveBeenCalled();
     expect(window.location.href).toBe("https://checkout.example.com/1");
+  });
+
+  test("shows the repurchase state and logs out before redirecting when the package is exhausted", async () => {
+    const logout = jest.fn();
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+        hasSubscriptionAccess: true,
+        hasQuestionPackageAvailable: false,
+        selectedInstitution: { id: 1, name: "UBA" },
+        getCurrentUserId: () => 99,
+        logout,
+      }),
+    );
+    post.mockResolvedValue({ url_session: "https://checkout.example.com/2" });
+
+    render(<SubjectSelection />);
+
+    expect(
+      screen.getByText("Buy a new package to keep generating questions"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Choose your subject")).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "Buy another package" }));
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("stripe/generate", { user_id: 99 });
+    });
+    expect(logout).toHaveBeenCalled();
+    expect(window.location.href).toBe("https://checkout.example.com/2");
   });
 
   test("shows checkout and refresh errors", async () => {
@@ -147,10 +178,10 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
-    expect(await screen.findByText("Unable to start the subscription checkout.")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Buy package now" }));
+    expect(await screen.findByText("Unable to start the package checkout.")).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, refresh access" }));
     expect(await screen.findByText("Refresh failed")).toBeInTheDocument();
   });
 
@@ -166,9 +197,9 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Subscribe now" }));
+    await userEvent.click(screen.getByRole("button", { name: "Buy package now" }));
 
-    expect(await screen.findByText("Unable to start the subscription checkout.")).toBeInTheDocument();
+    expect(await screen.findByText("Unable to start the package checkout.")).toBeInTheDocument();
   });
 
   test("loads and stores the default institution when one is not selected yet", async () => {
@@ -235,8 +266,8 @@ describe("SubjectSelection page", () => {
 
     render(<SubjectSelection />);
 
-    await userEvent.click(screen.getByRole("button", { name: "I already paid, check access" }));
+    await userEvent.click(screen.getByRole("button", { name: "I already paid, refresh access" }));
 
-    expect(await screen.findByText("Unable to verify the subscription status.")).toBeInTheDocument();
+    expect(await screen.findByText("Unable to verify the package access status.")).toBeInTheDocument();
   });
 });

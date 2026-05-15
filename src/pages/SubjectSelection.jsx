@@ -9,6 +9,7 @@ const SubjectSelection = () => {
     authUser,
     getCurrentUserId,
     hasSubscriptionAccess,
+    hasQuestionPackageAvailable,
     refreshSubscriptionAccess,
     logout,
     selectedInstitution,
@@ -101,6 +102,9 @@ const SubjectSelection = () => {
     getInstitution();
     // eslint-disable-next-line
   }, []);
+
+  const isPackageExhausted =
+    hasSubscriptionAccess && !hasQuestionPackageAvailable;
 
   if (!hasSubscriptionAccess) {
     return (
@@ -209,27 +213,67 @@ const SubjectSelection = () => {
   return (
     <Row className="w-100 m-0 p-0">
       <Col className="px-5 pt-4">
-        <h5>{t("subjectSelection.chooseSubject")}</h5>
-        <Row className="g-3 justify-content-center">
-          {subjects.map((subject, index) => (
-            <Col
-              key={`${subject.text}-${index}`}
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              className="d-flex"
-            >
-              <Card
-                className="w-100 h-100"
-                role="button"
-                onClick={() => handleClickSubject(subject.route)}
-              >
-                <Card.Body>{subject.text}</Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {isPackageExhausted ? (
+          <Card className="border-0 shadow-sm mb-4">
+            <Card.Body className="p-4 p-md-5 text-start">
+              <div className="d-flex justify-content-between align-items-start flex-column flex-md-row gap-3 mb-4">
+                <div>
+                  <p className="text-uppercase small mb-2 text-warning">
+                    {t("subjectSelection.exhaustedBadge")}
+                  </p>
+                  <h2 className="mb-2">{t("subjectSelection.exhaustedTitle")}</h2>
+                  <p className="mb-0 text-secondary">
+                    {t("subjectSelection.exhaustedDescription")}
+                  </p>
+                </div>
+                <div className="bg-warning-subtle rounded-pill px-3 py-2 text-dark fw-semibold">
+                  {t("subjectSelection.planLabel")}
+                </div>
+              </div>
+
+              <Button onClick={handleGenerateCheckout} disabled={isPreparingCheckout}>
+                {isPreparingCheckout ? (
+                  <>
+                    <Spinner size="sm" className="me-2" />
+                    {t("subjectSelection.openingCheckout")}
+                  </>
+                ) : (
+                  t("subjectSelection.buyAnotherPackage")
+                )}
+              </Button>
+
+              {error ? (
+                <Alert variant="danger" className="mt-3 mb-0">
+                  {error}
+                </Alert>
+              ) : null}
+            </Card.Body>
+          </Card>
+        ) : (
+          <>
+            <h5>{t("subjectSelection.chooseSubject")}</h5>
+            <Row className="g-3 justify-content-center">
+              {subjects.map((subject, index) => (
+                <Col
+                  key={`${subject.text}-${index}`}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  className="d-flex"
+                >
+                  <Card
+                    className="w-100 h-100"
+                    role="button"
+                    onClick={() => handleClickSubject(subject.route)}
+                  >
+                    <Card.Body>{subject.text}</Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </>
+        )}
         <div className="d-flex justify-content-center mt-4">
           <Button variant="outline-light" onClick={() => navigate("/answered-questions")}>
             {t("subjectSelection.viewMyAnswers")}

@@ -19,7 +19,12 @@ import AnsweredQuestions from "./pages/AnsweredQuestions";
 import Feedback from "./pages/Feedback";
 
 function AppContent() {
-  const { isAuthenticated, hasSelectedInstitution, hasSubscriptionAccess } =
+  const {
+    isAuthenticated,
+    hasSelectedInstitution,
+    hasSubscriptionAccess,
+    hasQuestionPackageAvailable,
+  } =
     useAppContext();
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,7 +73,10 @@ function AppContent() {
           <Route
             path="/anatomy"
             element={
-              isAuthenticated && hasSubscriptionAccess && hasSelectedInstitution ? (
+              isAuthenticated &&
+              hasSubscriptionAccess &&
+              hasSelectedInstitution &&
+              hasQuestionPackageAvailable ? (
                 <>
                   <AnatomyQuestionGenerator />
                   <Question />
