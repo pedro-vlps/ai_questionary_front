@@ -1,3 +1,7 @@
+## v1.5.1
+
+- Adjustmens on landing page and checkout elements to show the price before go to the checkout
+
 ## v1.5.0
 
 - Changed the payment format from signature to package
