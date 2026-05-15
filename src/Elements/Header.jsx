@@ -14,7 +14,6 @@ const Header = () => {
     isAuthenticated,
     logout,
     questionGenerationUsage,
-    formatDate,
     language,
     setLanguage,
     t,
@@ -26,10 +25,6 @@ const Header = () => {
   const [isMobileView, setIsMobileView] = useState(getIsMobileViewport);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-
     if (typeof window.matchMedia !== "function") {
       const updateViewport = () => {
         setIsMobileView(getIsMobileViewport());
@@ -80,14 +75,6 @@ const Header = () => {
     setLanguage(nextLanguage);
     closeMenus();
   };
-
-  const formattedCycleEnd = questionGenerationUsage?.cycle_end
-    ? formatDate(questionGenerationUsage.cycle_end, {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-    : null;
 
   return (
     <Row className="header-shell w-100 m-0 p-0 py-4 px-4">
@@ -179,7 +166,9 @@ const Header = () => {
                     <div className="header-submenu-info">
                       <strong>{t("header.limitsReset")}</strong>
                       <span>
-                        {formattedCycleEnd || t("header.limitsUnavailableValue")}
+                        {typeof questionGenerationUsage?.questions_remaining === "number"
+                          ? questionGenerationUsage.questions_remaining
+                          : t("header.limitsUnavailableValue")}
                       </span>
                     </div>
                   </div>

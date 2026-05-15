@@ -3,6 +3,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   AppProvider,
+  isQuestionPackageExhausted,
   resolveLanguage,
   resolveLocale,
   useAppContext,
@@ -23,6 +24,7 @@ const ContextHarness = () => {
       <div data-testid="language">{context.language}</div>
       <div data-testid="is-authenticated">{String(context.isAuthenticated)}</div>
       <div data-testid="has-access">{String(context.hasSubscriptionAccess)}</div>
+      <div data-testid="has-package">{String(context.hasQuestionPackageAvailable)}</div>
       <div data-testid="institution">{context.selectedInstitution?.name ?? "-"}</div>
       <div data-testid="user-id">{String(context.getCurrentUserId() ?? "")}</div>
       <div data-testid="usage">{JSON.stringify(context.questionGenerationUsage)}</div>
@@ -226,6 +228,7 @@ describe("AppProvider", () => {
 
     expect(screen.getByTestId("is-authenticated")).toHaveTextContent("true");
     expect(screen.getByTestId("has-access")).toHaveTextContent("true");
+    expect(screen.getByTestId("has-package")).toHaveTextContent("true");
     expect(screen.getByTestId("user-id")).toHaveTextContent("7");
     expect(localStorage.getItem("token")).toBe("token-123");
     expect(JSON.parse(localStorage.getItem("auth_user"))).toMatchObject({
@@ -267,6 +270,7 @@ describe("AppProvider", () => {
 
     expect(screen.getByTestId("usage")).toHaveTextContent('"questions_used":3');
     expect(screen.getByTestId("usage")).toHaveTextContent('"questions_remaining":0');
+    expect(screen.getByTestId("has-package")).toHaveTextContent("false");
     expect(JSON.parse(localStorage.getItem("question_generation_usage"))).toMatchObject({
       questions_used: 3,
       questions_remaining: 0,
@@ -457,5 +461,27 @@ describe("AppProvider", () => {
     expect(resolveLanguage("fr")).toBe("es");
     expect(resolveLocale("pt")).toBe("pt-BR");
     expect(resolveLocale("fr")).toBe("en-US");
+  });
+
+  test("detects when a question package is exhausted", () => {
+    expect(isQuestionPackageExhausted(null)).toBe(false);
+    expect(
+      isQuestionPackageExhausted({
+        questions_used: 9,
+        questions_limit: 10,
+        questions_remaining: 1,
+      }),
+    ).toBe(false);
+    expect(
+      isQuestionPackageExhausted({
+        questions_used: 10,
+        questions_limit: 10,
+      }),
+    ).toBe(true);
+    expect(
+      isQuestionPackageExhausted({
+        questions_remaining: 0,
+      }),
+    ).toBe(true);
   });
 });

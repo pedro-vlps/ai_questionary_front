@@ -69,6 +69,22 @@ const userHasSubscriptionAccess = (user) => {
   return Boolean(user.institution_id || user.institution?.id);
 };
 
+export const isQuestionPackageExhausted = (usage) => {
+  if (!usage) {
+    return false;
+  }
+
+  if (typeof usage.questions_remaining === "number") {
+    return usage.questions_remaining <= 0;
+  }
+
+  if (typeof usage.questions_limit === "number") {
+    return (usage.questions_used || 0) >= usage.questions_limit;
+  }
+
+  return false;
+};
+
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
@@ -95,6 +111,9 @@ export const AppProvider = ({ children }) => {
   const [hasSubscriptionAccess, setHasSubscriptionAccess] = useState(() =>
     userHasSubscriptionAccess(getStoredAuthUser()),
   );
+  const hasQuestionPackageAvailable =
+    authUser?.global_role === "Admin" ||
+    !isQuestionPackageExhausted(questionGenerationUsage);
 
   const setLanguage = (nextLanguage) => {
     const resolvedLanguage = resolveLanguage(nextLanguage);
@@ -315,6 +334,7 @@ export const AppProvider = ({ children }) => {
     isAuthenticated: Boolean(authUser),
     hasSelectedInstitution: Boolean(selectedInstitution),
     hasSubscriptionAccess,
+    hasQuestionPackageAvailable,
     refreshSubscriptionAccess,
     login,
     logout,

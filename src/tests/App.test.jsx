@@ -121,6 +121,19 @@ describe("App routes", () => {
     expect(screen.getByText("question-page")).toBeInTheDocument();
   });
 
+  test("redirects authenticated users with an exhausted package back to the app home", () => {
+    localStorage.setItem("auth_user", JSON.stringify({ id: 1, institution_id: 4 }));
+    localStorage.setItem("selected_institution", JSON.stringify({ id: 4, name: "UBA" }));
+    localStorage.setItem(
+      "question_generation_usage",
+      JSON.stringify({ questions_used: 150, questions_limit: 150, questions_remaining: 0 }),
+    );
+
+    renderAppAt("/anatomy");
+
+    expect(screen.getByText("subject-selection-page")).toBeInTheDocument();
+  });
+
   test("redirects authenticated users without a selected institution to the app route", () => {
     localStorage.setItem("auth_user", JSON.stringify({ id: 1, institution_id: 4 }));
 

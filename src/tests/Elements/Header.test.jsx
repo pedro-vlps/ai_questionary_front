@@ -1,10 +1,12 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Header from "../../Elements/Header";
 import { useAppContext } from "../../helpers/ContextApi";
 import { createMockAppContext } from "../utils/mockAppContext";
 
 const mockNavigate = jest.fn();
+const originalMatchMedia = window.matchMedia;
+const originalInnerWidth = window.innerWidth;
 
 jest.mock("../../helpers/ContextApi", () => ({
   useAppContext: jest.fn(),
@@ -71,6 +73,13 @@ jest.mock("react-router-dom", () => ({
 describe("Header", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.matchMedia = originalMatchMedia;
+    window.innerWidth = originalInnerWidth;
+  });
+
+  afterAll(() => {
+    window.matchMedia = originalMatchMedia;
+    window.innerWidth = originalInnerWidth;
   });
 
   test("renders nothing for unauthenticated users", () => {
@@ -85,17 +94,15 @@ describe("Header", () => {
   test("handles navigation/logout for authenticated users", async () => {
     const logout = jest.fn();
     const setLanguage = jest.fn();
-    const formatDate = jest.fn(() => "10/05/2026");
     useAppContext.mockReturnValue(
       createMockAppContext({
         isAuthenticated: true,
         logout,
         setLanguage,
-        formatDate,
         questionGenerationUsage: {
           questions_used: 4,
           questions_limit: 10,
-          cycle_end: "2026-05-10T12:00:00Z",
+          questions_remaining: 6,
         },
       }),
     );
@@ -120,11 +127,11 @@ describe("Header", () => {
     await userEvent.click(screen.getByRole("button", { name: "Menu" }));
     await waitFor(() => expect(screen.getByText("Limits")).toBeInTheDocument());
     await userEvent.click(screen.getByText("Limits"));
-    await waitFor(() => expect(screen.getByText("Generated this month")).toBeInTheDocument());
-    expect(screen.getByText("Monthly limit")).toBeInTheDocument();
-    expect(screen.getByText("Resets on")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText("Used from package")).toBeInTheDocument());
+    expect(screen.getByText("Package size")).toBeInTheDocument();
+    expect(screen.getByText("Remaining")).toBeInTheDocument();
     expect(screen.getByText("10")).toBeInTheDocument();
-    expect(screen.getByText("10/05/2026")).toBeInTheDocument();
+    expect(screen.getByText("6")).toBeInTheDocument();
 
     await userEvent.click(screen.getByText("Language"));
     await waitFor(() => expect(screen.getByRole("button", { name: /Portug/i })).toBeInTheDocument());
@@ -139,10 +146,47 @@ describe("Header", () => {
     expect(setLanguage).toHaveBeenCalledWith("pt");
     expect(logout).toHaveBeenCalled();
     expect(mockNavigate).toHaveBeenNthCalledWith(4, "/login");
-    expect(formatDate).toHaveBeenCalledWith("2026-05-10T12:00:00Z", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
+  });
+
+  test("navigates home when the authenticated user clicks the logo", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+      }),
+    );
+
+    render(<Header />);
+
+    await userEvent.click(screen.getByAltText("Project logo"));
+
+    expect(mockNavigate).toHaveBeenCalledWith("/app");
+  });
+
+  test("closes open submenus when the main menu is toggled closed", async () => {
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+        questionGenerationUsage: {
+          questions_used: 4,
+          questions_limit: 10,
+          questions_remaining: 6,
+        },
+      }),
+    );
+
+    render(<Header />);
+
+    const menuButton = screen.getByRole("button", { name: "Menu" });
+
+    await userEvent.click(menuButton);
+    await userEvent.click(screen.getByText("Limits"));
+    expect(await screen.findByText("Used from package")).toBeInTheDocument();
+
+    await userEvent.click(menuButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText("Used from package")).not.toBeInTheDocument();
+      expect(screen.queryByText("Home")).not.toBeInTheDocument();
     });
   });
 
@@ -153,7 +197,7 @@ describe("Header", () => {
         questionGenerationUsage: {
           questions_used: 4,
           questions_limit: null,
-          cycle_end: null,
+          questions_remaining: null,
         },
       }),
     );
@@ -163,7 +207,7 @@ describe("Header", () => {
     await userEvent.click(screen.getByRole("button", { name: "Menu" }));
     await userEvent.click(screen.getByText("Limits"));
 
-    expect(await screen.findByText("Generated this month")).toBeInTheDocument();
+    expect(await screen.findByText("Used from package")).toBeInTheDocument();
     expect(screen.getAllByText("Not available")).toHaveLength(2);
   });
 
@@ -205,7 +249,7 @@ describe("Header", () => {
         questionGenerationUsage: {
           questions_used: 4,
           questions_limit: 10,
-          cycle_end: "2026-05-10T12:00:00Z",
+          questions_remaining: 6,
         },
       }),
     );
@@ -214,12 +258,12 @@ describe("Header", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "Menu" }));
     await userEvent.click(screen.getByText("Limites"));
-    expect(await screen.findByText("Generadas este mes")).toBeInTheDocument();
+    expect(await screen.findByText("Usadas del paquete")).toBeInTheDocument();
 
     await userEvent.click(screen.getByText("Idioma"));
 
     await waitFor(() => {
-      expect(screen.queryByText("Generadas este mes")).not.toBeInTheDocument();
+      expect(screen.queryByText("Usadas del paquete")).not.toBeInTheDocument();
     });
 
     const spanishButton = await screen.findByRole("button", { name: /Espa/i });
@@ -231,5 +275,70 @@ describe("Header", () => {
     await userEvent.click(englishButton);
 
     expect(setLanguage).toHaveBeenCalledWith("en");
+  });
+
+  test("updates the logo for mobile view when matchMedia change events fire", async () => {
+    let changeHandler;
+    const addEventListener = jest.fn((eventName, handler) => {
+      if (eventName === "change") {
+        changeHandler = handler;
+      }
+    });
+    const removeEventListener = jest.fn();
+
+    window.matchMedia = jest.fn().mockImplementation(() => ({
+      matches: false,
+      addEventListener,
+      removeEventListener,
+    }));
+
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+      }),
+    );
+
+    const { unmount } = render(<Header />);
+
+    const logo = screen.getByAltText("Project logo");
+    expect(logo).not.toHaveClass("header-logo-mobile");
+
+    await act(async () => {
+      changeHandler?.({ matches: true });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByAltText("Project logo")).toHaveClass("header-logo-mobile");
+    });
+
+    unmount();
+
+    expect(addEventListener).toHaveBeenCalledWith("change", expect.any(Function));
+    expect(removeEventListener).toHaveBeenCalledWith("change", expect.any(Function));
+  });
+
+  test("falls back to legacy matchMedia listeners when addEventListener is unavailable", () => {
+    const addListener = jest.fn();
+    const removeListener = jest.fn();
+
+    window.matchMedia = jest.fn().mockImplementation(() => ({
+      matches: false,
+      addListener,
+      removeListener,
+    }));
+
+    useAppContext.mockReturnValue(
+      createMockAppContext({
+        isAuthenticated: true,
+      }),
+    );
+
+    const { unmount } = render(<Header />);
+
+    expect(addListener).toHaveBeenCalledWith(expect.any(Function));
+
+    unmount();
+
+    expect(removeListener).toHaveBeenCalledWith(expect.any(Function));
   });
 });

@@ -47,7 +47,7 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(screen.getByLabelText("Password"), "Secret123!");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
     await waitFor(() => {
       expect(post).toHaveBeenNthCalledWith(1, "users", {
@@ -71,7 +71,7 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(screen.getByLabelText("Password"), "Secret123!");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
     expect(await screen.findByText("Unable to identify the created user.")).toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalled();
@@ -89,9 +89,9 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(screen.getByLabelText("Password"), "Secret123!");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
-    expect(await screen.findByText("Unable to start the subscription checkout.")).toBeInTheDocument();
+    expect(await screen.findByText("Unable to start the package checkout.")).toBeInTheDocument();
     expect(screen.getByText("Account created successfully. Redirecting to checkout...")).toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalled();
   });
@@ -112,7 +112,7 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(passwordInput, "Secret123!");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
     expect(await screen.findByText("Email already exists")).toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalled();
@@ -131,7 +131,7 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(screen.getByLabelText("Password"), "Secret123!");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
     expect(await screen.findByText("Unable to complete registration.")).toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalled();
@@ -144,7 +144,7 @@ describe("Register page", () => {
     await userEvent.type(screen.getByLabelText("Email"), "pedro@example.com");
     await userEvent.type(screen.getByLabelText("Nickname"), "pedro");
     await userEvent.type(screen.getByLabelText("Password"), "secret");
-    await userEvent.click(screen.getByRole("button", { name: "Register and subscribe" }));
+    await userEvent.click(screen.getByRole("button", { name: "Register and buy package" }));
 
     expect(
       await screen.findAllByText(

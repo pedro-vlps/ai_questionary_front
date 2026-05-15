@@ -16,15 +16,15 @@ export const translations = {
     "language.option.pt": "Portugues",
 
     "header.logoAlt": "Project logo",
-    "header.questionsThisMonth": "Questions this month",
-    "header.usageResetDate": "Your monthly limit will reset on {date}.",
+    "header.questionsThisMonth": "Questions in your package",
+    "header.usageResetDate": "You still have {date} questions available.",
     "header.usageResetUnavailable":
-      "The monthly reset date is not available yet.",
+      "The remaining question count is not available yet.",
     "header.menu": "Menu",
     "header.limits": "Limits",
-    "header.limitsUsed": "Generated this month",
-    "header.limitsCap": "Monthly limit",
-    "header.limitsReset": "Resets on",
+    "header.limitsUsed": "Used from package",
+    "header.limitsCap": "Package size",
+    "header.limitsReset": "Remaining",
     "header.limitsUnavailableValue": "Not available",
     "header.language": "Language",
     "header.home": "Home",
@@ -45,7 +45,7 @@ export const translations = {
     "landing.highlight.mockExams.title": "Mock exams (Coming soon)",
     "landing.highlight.mockExams.description":
       "Answer questions in sequence to simulate real exam behavior.",
-    "landing.feature.questionLimit": "Up to 150 question generations per month",
+    "landing.feature.questionLimit": "One package with 150 question generations and no expiration",
     "landing.subject.anatomy": "Anatomy",
     "landing.subject.histology": "Histology (Coming soon)",
     "landing.subject.embryology": "Embryology (Coming soon)",
@@ -53,9 +53,9 @@ export const translations = {
     "landing.subject.genetics": "Genetics (Coming soon)",
     "landing.title": "UBA Trainer",
     "landing.subtitle": "A platform to train for your UBA anatomy exams.",
-    "landing.planTitle": "Basic Plan",
+    "landing.planTitle": "150-question package",
     "landing.subjectsTitle": "Subjects available in the app",
-    "landing.createAccount": "Create account and subscribe",
+    "landing.createAccount": "Create account and buy package",
     "landing.alreadyHaveAccount": "I already have an account",
 
     "login.invalidServerResponse": "Invalid response from the server.",
@@ -102,7 +102,7 @@ export const translations = {
     "register.successRedirect":
       "Account created successfully. Redirecting to checkout...",
     "register.checkoutStartFailed":
-      "Unable to start the subscription checkout.",
+      "Unable to start the package checkout.",
     "register.failed": "Unable to complete registration.",
     "register.title": "Register",
     "register.name": "Name",
@@ -112,35 +112,40 @@ export const translations = {
     "register.hidePassword": "Hide password",
     "register.showPassword": "Show password",
     "register.redirecting": "Redirecting...",
-    "register.submit": "Register and subscribe",
+    "register.submit": "Register and buy package",
     "register.backToLogin": "Back to login",
 
     "subjectSelection.userNotIdentified":
       "Unable to identify the authenticated user.",
     "subjectSelection.checkoutStartFailed":
-      "Unable to start the subscription checkout.",
+      "Unable to start the package checkout.",
     "subjectSelection.paymentPending":
-      "Payment is still processing or the subscription has not been released yet.",
+      "Payment is still processing or your package has not been released yet.",
     "subjectSelection.subscriptionStatusFailed":
-      "Unable to verify the subscription status.",
-    "subjectSelection.pendingBadge": "Pending subscription",
-    "subjectSelection.pendingTitle": "Activate your access to use the platform",
+      "Unable to verify the package access status.",
+    "subjectSelection.pendingBadge": "Package pending",
+    "subjectSelection.pendingTitle": "Activate your package to use the platform",
     "subjectSelection.pendingDescription":
-      "Your login is already active. To use the protected routes in the app, finish the Stripe subscription and then refresh your access status.",
-    "subjectSelection.planLabel": "UBA Basic Plan",
+      "Your login is already active. To use the protected routes in the app, finish the Stripe purchase and then refresh your access status.",
+    "subjectSelection.planLabel": "UBA 150-question package",
     "subjectSelection.step1Title": "1. Complete payment",
     "subjectSelection.step1Description":
-      "Generate the checkout session and complete the subscription with Stripe.",
+      "Generate the checkout session and buy your 150-question package with Stripe.",
     "subjectSelection.openingCheckout": "Opening checkout...",
-    "subjectSelection.subscribeNow": "Subscribe now",
-    "subjectSelection.step2Title": "2. Unlock access",
+    "subjectSelection.subscribeNow": "Buy package now",
+    "subjectSelection.step2Title": "2. Unlock package",
     "subjectSelection.step2Description":
-      "After payment, check whether the API has already received the Stripe events.",
+      "After payment, check whether the API has already received the Stripe events and released your package.",
     "subjectSelection.checking": "Checking...",
-    "subjectSelection.alreadyPaid": "I already paid, check access",
+    "subjectSelection.alreadyPaid": "I already paid, refresh access",
     "subjectSelection.connectedUser": "Connected user:",
     "subjectSelection.activeAccount": "Active account",
     "subjectSelection.chooseSubject": "Choose your subject",
+    "subjectSelection.exhaustedBadge": "Package used up",
+    "subjectSelection.exhaustedTitle": "Buy a new package to keep generating questions",
+    "subjectSelection.exhaustedDescription":
+      "Your previous package has no remaining questions. We will log you out before opening Stripe checkout so your next login loads the updated access.",
+    "subjectSelection.buyAnotherPackage": "Buy another package",
     "subjectSelection.viewMyAnswers": "View my answers",
 
     "anatomy.topic.locomotor": "Locomotor",
@@ -196,15 +201,15 @@ export const translations = {
     "language.option.pt": "Portugués",
 
     "header.logoAlt": "Logo del proyecto",
-    "header.questionsThisMonth": "Preguntas este mes",
-    "header.usageResetDate": "Tu límite mensual se reiniciará el {date}.",
+    "header.questionsThisMonth": "Preguntas de tu paquete",
+    "header.usageResetDate": "Todavía te quedan {date} preguntas disponibles.",
     "header.usageResetUnavailable":
-      "La fecha de renovación del límite mensual todavía no está disponible.",
+      "La cantidad de preguntas restantes todavía no está disponible.",
     "header.menu": "Menu",
     "header.limits": "Limites",
-    "header.limitsUsed": "Generadas este mes",
-    "header.limitsCap": "Limite mensual",
-    "header.limitsReset": "Se reinicia el",
+    "header.limitsUsed": "Usadas del paquete",
+    "header.limitsCap": "Tamaño del paquete",
+    "header.limitsReset": "Restantes",
     "header.limitsUnavailableValue": "No disponible",
     "header.language": "Idioma",
     "header.home": "Inicio",
@@ -226,7 +231,7 @@ export const translations = {
     "landing.highlight.mockExams.description":
       "Responde preguntas en secuencia para simular el comportamiento de un examen real.",
     "landing.feature.questionLimit":
-      "Hasta 150 generaciones de preguntas por mes",
+      "Un paquete de 150 generaciones de preguntas sin vencimiento",
     "landing.subject.anatomy": "Anatomía",
     "landing.subject.histology": "Histología (Próximamente)",
     "landing.subject.embryology": "Embriología (Próximamente)",
@@ -235,9 +240,9 @@ export const translations = {
     "landing.title": "UBA Trainer",
     "landing.subtitle":
       "Una plataforma para entrenarte para tus exámenes de anatomía de la UBA.",
-    "landing.planTitle": "Plan Básico",
+    "landing.planTitle": "Paquete de 150 preguntas",
     "landing.subjectsTitle": "Materias disponibles en la aplicación",
-    "landing.createAccount": "Crear cuenta y suscribirme",
+    "landing.createAccount": "Crear cuenta y comprar paquete",
     "landing.alreadyHaveAccount": "Ya tengo cuenta",
 
     "login.invalidServerResponse": "Respuesta inválida del servidor.",
@@ -287,7 +292,7 @@ export const translations = {
     "register.successRedirect":
       "Cuenta creada con éxito. Redirigiendo al checkout...",
     "register.checkoutStartFailed":
-      "No fue posible iniciar el checkout de la suscripción.",
+      "No fue posible iniciar el checkout del paquete.",
     "register.failed": "No fue posible completar el registro.",
     "register.title": "Registro",
     "register.name": "Nombre",
@@ -297,35 +302,41 @@ export const translations = {
     "register.hidePassword": "Ocultar contraseña",
     "register.showPassword": "Mostrar contraseña",
     "register.redirecting": "Redirigiendo...",
-    "register.submit": "Registrarme y suscribirme",
+    "register.submit": "Registrarme y comprar paquete",
     "register.backToLogin": "Volver al login",
 
     "subjectSelection.userNotIdentified":
       "No fue posible identificar al usuario autenticado.",
     "subjectSelection.checkoutStartFailed":
-      "No fue posible iniciar el checkout de la suscripción.",
+      "No fue posible iniciar el checkout del paquete.",
     "subjectSelection.paymentPending":
-      "El pago todavía está en procesamiento o la suscripción aún no fue habilitada.",
+      "El pago todavía está en procesamiento o el paquete aún no fue liberado.",
     "subjectSelection.subscriptionStatusFailed":
-      "No fue posible verificar el estado de la suscripción.",
-    "subjectSelection.pendingBadge": "Suscripción pendiente",
-    "subjectSelection.pendingTitle": "Activa tu acceso para usar la plataforma",
+      "No fue posible verificar el estado del paquete.",
+    "subjectSelection.pendingBadge": "Paquete pendiente",
+    "subjectSelection.pendingTitle": "Activa tu paquete para usar la plataforma",
     "subjectSelection.pendingDescription":
-      "Tu login ya está activo. Para usar las rutas protegidas de la aplicación, completá la suscripción en Stripe y después actualizá el estado del acceso.",
-    "subjectSelection.planLabel": "Plan Básico UBA",
+      "Tu login ya está activo. Para usar las rutas protegidas de la aplicación, completá la compra en Stripe y después actualizá el estado del acceso.",
+    "subjectSelection.planLabel": "Paquete UBA de 150 preguntas",
     "subjectSelection.step1Title": "1. Completar pago",
     "subjectSelection.step1Description":
-      "Generá la sesión de checkout y completá la suscripción con Stripe.",
+      "Generá la sesión de checkout y comprá tu paquete de 150 preguntas con Stripe.",
     "subjectSelection.openingCheckout": "Abriendo checkout...",
-    "subjectSelection.subscribeNow": "Suscribirme ahora",
-    "subjectSelection.step2Title": "2. Liberar acceso",
+    "subjectSelection.subscribeNow": "Comprar paquete ahora",
+    "subjectSelection.step2Title": "2. Liberar paquete",
     "subjectSelection.step2Description":
-      "Después del pago, verificá si la API ya recibió los eventos de Stripe.",
+      "Después del pago, verificá si la API ya recibió los eventos de Stripe y liberó tu paquete.",
     "subjectSelection.checking": "Verificando...",
-    "subjectSelection.alreadyPaid": "Ya pagué, verificar acceso",
+    "subjectSelection.alreadyPaid": "Ya pagué, actualizar acceso",
     "subjectSelection.connectedUser": "Usuario conectado:",
     "subjectSelection.activeAccount": "Cuenta activa",
     "subjectSelection.chooseSubject": "Elige tu materia",
+    "subjectSelection.exhaustedBadge": "Paquete agotado",
+    "subjectSelection.exhaustedTitle":
+      "Compra un nuevo paquete para seguir generando preguntas",
+    "subjectSelection.exhaustedDescription":
+      "Tu paquete anterior ya no tiene preguntas disponibles. Cerraremos tu sesión antes de abrir el checkout de Stripe para que tu próximo login cargue el acceso actualizado.",
+    "subjectSelection.buyAnotherPackage": "Comprar otro paquete",
     "subjectSelection.viewMyAnswers": "Ver mis respuestas",
 
     "anatomy.topic.locomotor": "Locomotor",
@@ -385,15 +396,15 @@ export const translations = {
     "language.option.pt": "Português",
 
     "header.logoAlt": "Logo do projeto",
-    "header.questionsThisMonth": "Questões no mês",
-    "header.usageResetDate": "Seu limite mensal será renovado em {date}.",
+    "header.questionsThisMonth": "Questões do seu pacote",
+    "header.usageResetDate": "Você ainda tem {date} questões disponíveis.",
     "header.usageResetUnavailable":
-      "A data de renovação do limite mensal ainda não está disponível.",
+      "A quantidade de questões restantes ainda não está disponível.",
     "header.menu": "Menu",
     "header.limits": "Limites",
-    "header.limitsUsed": "Geradas no mês",
-    "header.limitsCap": "Limite mensal",
-    "header.limitsReset": "Renova em",
+    "header.limitsUsed": "Usadas do pacote",
+    "header.limitsCap": "Tamanho do pacote",
+    "header.limitsReset": "Restantes",
     "header.limitsUnavailableValue": "Não disponível",
     "header.language": "Idioma",
     "header.home": "Início",
@@ -414,7 +425,7 @@ export const translations = {
     "landing.highlight.mockExams.title": "Simulados (Em breve)",
     "landing.highlight.mockExams.description":
       "Responda perguntas em sequência para simular o comportamento de provas reais.",
-    "landing.feature.questionLimit": "Até 150 gerações de perguntas por mês",
+    "landing.feature.questionLimit": "Um pacote com 150 gerações de perguntas sem expiração",
     "landing.subject.anatomy": "Anatomia",
     "landing.subject.histology": "Histologia (Em breve)",
     "landing.subject.embryology": "Embriologia (Em breve)",
@@ -423,9 +434,9 @@ export const translations = {
     "landing.title": "UBA Trainer",
     "landing.subtitle":
       "Uma plataforma para treinar para as suas provas de anatomia da UBA.",
-    "landing.planTitle": "Plano Básico",
+    "landing.planTitle": "Pacote de 150 perguntas",
     "landing.subjectsTitle": "Matérias disponíveis no aplicativo",
-    "landing.createAccount": "Criar conta e assinar",
+    "landing.createAccount": "Criar conta e comprar pacote",
     "landing.alreadyHaveAccount": "Já tenho conta",
 
     "login.invalidServerResponse": "Resposta inválida do servidor.",
@@ -475,7 +486,7 @@ export const translations = {
     "register.successRedirect":
       "Cadastro realizado com sucesso. Redirecionando para o checkout...",
     "register.checkoutStartFailed":
-      "Não foi possível iniciar o checkout da assinatura.",
+      "Não foi possível iniciar o checkout do pacote.",
     "register.failed": "Não foi possível concluir o cadastro.",
     "register.title": "Cadastro",
     "register.name": "Nome",
@@ -485,35 +496,41 @@ export const translations = {
     "register.hidePassword": "Ocultar senha",
     "register.showPassword": "Mostrar senha",
     "register.redirecting": "Redirecionando...",
-    "register.submit": "Cadastrar e assinar",
+    "register.submit": "Cadastrar e comprar pacote",
     "register.backToLogin": "Voltar para o login",
 
     "subjectSelection.userNotIdentified":
       "Não foi possível identificar o usuário autenticado.",
     "subjectSelection.checkoutStartFailed":
-      "Não foi possível iniciar o checkout da assinatura.",
+      "Não foi possível iniciar o checkout do pacote.",
     "subjectSelection.paymentPending":
-      "O pagamento ainda está em processamento ou a assinatura ainda não foi liberada.",
+      "O pagamento ainda está em processamento ou o pacote ainda não foi liberado.",
     "subjectSelection.subscriptionStatusFailed":
-      "Não foi possível verificar o status da assinatura.",
-    "subjectSelection.pendingBadge": "Assinatura pendente",
-    "subjectSelection.pendingTitle": "Ative seu acesso para usar a plataforma",
+      "Não foi possível verificar o status do pacote.",
+    "subjectSelection.pendingBadge": "Pacote pendente",
+    "subjectSelection.pendingTitle": "Ative seu pacote para usar a plataforma",
     "subjectSelection.pendingDescription":
-      "Seu login já está liberado. Para usar as rotas protegidas do aplicativo, finalize a assinatura no Stripe e depois atualize o status do acesso.",
-    "subjectSelection.planLabel": "Plano Básico UBA",
+      "Seu login já está liberado. Para usar as rotas protegidas do aplicativo, finalize a compra no Stripe e depois atualize o status do acesso.",
+    "subjectSelection.planLabel": "Pacote UBA de 150 perguntas",
     "subjectSelection.step1Title": "1. Concluir pagamento",
     "subjectSelection.step1Description":
-      "Gere a sessão de checkout e finalize a assinatura com o Stripe.",
+      "Gere a sessão de checkout e compre seu pacote de 150 perguntas com o Stripe.",
     "subjectSelection.openingCheckout": "Abrindo checkout...",
-    "subjectSelection.subscribeNow": "Assinar agora",
-    "subjectSelection.step2Title": "2. Liberar acesso",
+    "subjectSelection.subscribeNow": "Comprar pacote agora",
+    "subjectSelection.step2Title": "2. Liberar pacote",
     "subjectSelection.step2Description":
-      "Depois do pagamento, verifique se a API já recebeu os eventos do Stripe.",
+      "Depois do pagamento, verifique se a API já recebeu os eventos do Stripe e liberou seu pacote.",
     "subjectSelection.checking": "Verificando...",
-    "subjectSelection.alreadyPaid": "Já paguei, verificar acesso",
+    "subjectSelection.alreadyPaid": "Já paguei, atualizar acesso",
     "subjectSelection.connectedUser": "Usuário conectado:",
     "subjectSelection.activeAccount": "Conta ativa",
     "subjectSelection.chooseSubject": "Escolha sua matéria",
+    "subjectSelection.exhaustedBadge": "Pacote esgotado",
+    "subjectSelection.exhaustedTitle":
+      "Compre um novo pacote para continuar gerando perguntas",
+    "subjectSelection.exhaustedDescription":
+      "Seu pacote anterior não tem mais questões disponíveis. Vamos encerrar sua sessão antes de abrir o checkout do Stripe para que o próximo login carregue o acesso atualizado.",
+    "subjectSelection.buyAnotherPackage": "Comprar outro pacote",
     "subjectSelection.viewMyAnswers": "Ver minhas respostas",
 
     "anatomy.topic.locomotor": "Locomotor",
