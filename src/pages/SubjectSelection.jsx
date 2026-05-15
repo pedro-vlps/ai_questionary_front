@@ -168,21 +168,6 @@ const SubjectSelection = () => {
                       <Card.Text className="text-secondary">
                         {t("subjectSelection.step2Description")}
                       </Card.Text>
-                      <Button
-                        variant="outline-light"
-                        className="w-100"
-                        onClick={handleRefreshAccess}
-                        disabled={isRefreshingAccess}
-                      >
-                        {isRefreshingAccess ? (
-                          <>
-                            <Spinner size="sm" className="me-2" />
-                            {t("subjectSelection.checking")}
-                          </>
-                        ) : (
-                          t("subjectSelection.alreadyPaid")
-                        )}
-                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
