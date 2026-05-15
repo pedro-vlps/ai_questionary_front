@@ -82,6 +82,9 @@ const LandingPage = () => {
             <Card className="landing-plan-card border-0">
               <Card.Body className="p-4 p-lg-5 text-start">
                 <h2 className="landing-plan-title">{t("landing.planTitle")}</h2>
+                <p className="fs-5 fw-semibold mb-4 price-landing-page-color">
+                  {t("landing.planPrice")}
+                </p>
 
                 <div className="landing-feature-list">
                   {planFeatures.map((feature) => (

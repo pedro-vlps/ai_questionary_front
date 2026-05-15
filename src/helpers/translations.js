@@ -33,6 +33,7 @@ export const translations = {
     "header.logOut": "Log out",
 
     "footer.developedBy": "Developed by Pedro Vieira",
+    "footer.contact": "Contact:",
 
     "landing.highlight.multipleChoice.title":
       "AI-generated multiple-choice questions",
@@ -52,8 +53,9 @@ export const translations = {
     "landing.subject.molecularBiology": "Molecular biology (Coming soon)",
     "landing.subject.genetics": "Genetics (Coming soon)",
     "landing.title": "UBA Trainer",
-    "landing.subtitle": "A platform to train for your UBA anatomy exams.",
+    "landing.subtitle": "A platform to train for your UBA exams.",
     "landing.planTitle": "150-question package",
+    "landing.planPrice": "Price: US$20",
     "landing.subjectsTitle": "Subjects available in the app",
     "landing.createAccount": "Create account and buy package",
     "landing.alreadyHaveAccount": "I already have an account",
@@ -128,9 +130,10 @@ export const translations = {
     "subjectSelection.pendingDescription":
       "Your login is already active. To use the protected routes in the app, finish the Stripe purchase and then refresh your access status.",
     "subjectSelection.planLabel": "UBA 150-question package",
+    "subjectSelection.planPrice": "Price: US$20",
     "subjectSelection.step1Title": "1. Complete payment",
     "subjectSelection.step1Description":
-      "Generate the checkout session and buy your 150-question package with Stripe.",
+      "Generate the checkout session and buy your 150-question package with Stripe for US$20.",
     "subjectSelection.openingCheckout": "Opening checkout...",
     "subjectSelection.subscribeNow": "Buy package now",
     "subjectSelection.step2Title": "2. Unlock package",
@@ -218,6 +221,7 @@ export const translations = {
     "header.logOut": "Cerrar sesión",
 
     "footer.developedBy": "Desarrollado por Pedro Vieira",
+    "footer.contact": "Contacto:",
 
     "landing.highlight.multipleChoice.title":
       "Preguntas de opción múltiple generadas por IA",
@@ -239,8 +243,9 @@ export const translations = {
     "landing.subject.genetics": "Genética (Próximamente)",
     "landing.title": "UBA Trainer",
     "landing.subtitle":
-      "Una plataforma para entrenarte para tus exámenes de anatomía de la UBA.",
+      "Una plataforma para entrenarte para tus exámenes de la UBA.",
     "landing.planTitle": "Paquete de 150 preguntas",
+    "landing.planPrice": "Precio: US$20",
     "landing.subjectsTitle": "Materias disponibles en la aplicación",
     "landing.createAccount": "Crear cuenta y comprar paquete",
     "landing.alreadyHaveAccount": "Ya tengo cuenta",
@@ -318,6 +323,7 @@ export const translations = {
     "subjectSelection.pendingDescription":
       "Tu login ya está activo. Para usar las rutas protegidas de la aplicación, completá la compra en Stripe y después actualizá el estado del acceso.",
     "subjectSelection.planLabel": "Paquete UBA de 150 preguntas",
+    "subjectSelection.planPrice": "Precio: US$20",
     "subjectSelection.step1Title": "1. Completar pago",
     "subjectSelection.step1Description":
       "Generá la sesión de checkout y comprá tu paquete de 150 preguntas con Stripe.",
@@ -413,6 +419,7 @@ export const translations = {
     "header.logOut": "Sair",
 
     "footer.developedBy": "Desenvolvido por Pedro Vieira",
+    "footer.contact": "Contato:",
 
     "landing.highlight.multipleChoice.title":
       "Questões de múltipla escolha geradas por IA",
@@ -433,8 +440,9 @@ export const translations = {
     "landing.subject.genetics": "Genética (Em breve)",
     "landing.title": "UBA Trainer",
     "landing.subtitle":
-      "Uma plataforma para treinar para as suas provas de anatomia da UBA.",
+      "Uma plataforma para treinar para as suas provas da UBA.",
     "landing.planTitle": "Pacote de 150 perguntas",
+    "landing.planPrice": "Preço: US$20",
     "landing.subjectsTitle": "Matérias disponíveis no aplicativo",
     "landing.createAccount": "Criar conta e comprar pacote",
     "landing.alreadyHaveAccount": "Já tenho conta",
@@ -512,6 +520,7 @@ export const translations = {
     "subjectSelection.pendingDescription":
       "Seu login já está liberado. Para usar as rotas protegidas do aplicativo, finalize a compra no Stripe e depois atualize o status do acesso.",
     "subjectSelection.planLabel": "Pacote UBA de 150 perguntas",
+    "subjectSelection.planPrice": "Preço: US$20",
     "subjectSelection.step1Title": "1. Concluir pagamento",
     "subjectSelection.step1Description":
       "Gere a sessão de checkout e compre seu pacote de 150 perguntas com o Stripe.",

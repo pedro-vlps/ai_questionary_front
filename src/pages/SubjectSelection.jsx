@@ -122,8 +122,13 @@ const SubjectSelection = () => {
                     {t("subjectSelection.pendingDescription")}
                   </p>
                 </div>
-                <div className="bg-warning-subtle rounded-pill px-3 py-2 text-dark fw-semibold">
-                  {t("subjectSelection.planLabel")}
+                <div className="d-flex flex-column align-items-stretch gap-2">
+                  <div className="bg-warning-subtle rounded-pill px-3 py-2 text-dark fw-semibold text-center">
+                    {t("subjectSelection.planLabel")}
+                  </div>
+                  <div className="bg-light rounded-pill px-3 py-2 text-dark fw-semibold text-center">
+                    {t("subjectSelection.planPrice")}
+                  </div>
                 </div>
               </div>
 
@@ -226,8 +231,13 @@ const SubjectSelection = () => {
                     {t("subjectSelection.exhaustedDescription")}
                   </p>
                 </div>
-                <div className="bg-warning-subtle rounded-pill px-3 py-2 text-dark fw-semibold">
-                  {t("subjectSelection.planLabel")}
+                <div className="d-flex flex-column align-items-start align-items-md-end gap-2">
+                  <div className="bg-warning-subtle rounded-pill px-3 py-2 text-dark fw-semibold">
+                    {t("subjectSelection.planLabel")}
+                  </div>
+                  <div className="bg-light rounded-pill px-3 py-2 text-dark fw-semibold">
+                    {t("subjectSelection.planPrice")}
+                  </div>
                 </div>
               </div>
 

@@ -8,11 +8,15 @@ jest.mock("../../helpers/ContextApi", () => ({
 }));
 
 describe("Footer", () => {
-  test("renders the translated footer text", () => {
+  test("renders the translated footer text and support contact", () => {
     useAppContext.mockReturnValue(createMockAppContext());
 
     render(<Footer />);
 
     expect(screen.getByText("Developed by Pedro Vieira")).toBeInTheDocument();
+    expect(screen.getByText("Contact:")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "soporte@axiosacademia.com" }),
+    ).toHaveAttribute("href", "mailto:soporte@axiosacademia.com");
   });
 });

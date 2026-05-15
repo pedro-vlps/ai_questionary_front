@@ -9,6 +9,12 @@ const Footer = () => {
       <Col md={2} className="m-auto">
         {t("footer.developedBy")}
       </Col>
+      <Col md="auto" className="m-auto">
+        {t("footer.contact")}{" "}
+        <a href="mailto:soporte@axiosacademia.com">
+          soporte@axiosacademia.com
+        </a>
+      </Col>
     </Row>
   );
 };
