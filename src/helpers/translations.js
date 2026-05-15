@@ -128,17 +128,17 @@ export const translations = {
     "subjectSelection.pendingBadge": "Package pending",
     "subjectSelection.pendingTitle": "Activate your package to use the platform",
     "subjectSelection.pendingDescription":
-      "Your login is already active. To use the protected routes in the app, finish the Stripe purchase and then refresh your access status.",
+      "Your account is ready. Complete the payment to start using the app.",
     "subjectSelection.planLabel": "UBA 150-question package",
     "subjectSelection.planPrice": "Price: US$20",
     "subjectSelection.step1Title": "1. Complete payment",
     "subjectSelection.step1Description":
-      "Generate the checkout session and buy your 150-question package with Stripe for US$20.",
+      "Click the button below to be redirected to the payment checkout.",
     "subjectSelection.openingCheckout": "Opening checkout...",
     "subjectSelection.subscribeNow": "Buy package now",
     "subjectSelection.step2Title": "2. Unlock package",
     "subjectSelection.step2Description":
-      "After payment, check whether the API has already received the Stripe events and released your package.",
+      "After payment, log in and start using the app.",
     "subjectSelection.checking": "Checking...",
     "subjectSelection.alreadyPaid": "I already paid, refresh access",
     "subjectSelection.connectedUser": "Connected user:",
@@ -319,19 +319,19 @@ export const translations = {
     "subjectSelection.subscriptionStatusFailed":
       "No fue posible verificar el estado del paquete.",
     "subjectSelection.pendingBadge": "Paquete pendiente",
-    "subjectSelection.pendingTitle": "Activa tu paquete para usar la plataforma",
+    "subjectSelection.pendingTitle": "Activá tu paquete para usar la plataforma",
     "subjectSelection.pendingDescription":
-      "Tu login ya está activo. Para usar las rutas protegidas de la aplicación, completá la compra en Stripe y después actualizá el estado del acceso.",
+      "Tu cuenta ya esta lista. Completá el pago para empezar a usar la aplicación.",
     "subjectSelection.planLabel": "Paquete UBA de 150 preguntas",
     "subjectSelection.planPrice": "Precio: US$20",
     "subjectSelection.step1Title": "1. Completar pago",
     "subjectSelection.step1Description":
-      "Generá la sesión de checkout y comprá tu paquete de 150 preguntas con Stripe.",
+      "Hacé clic en el botón de abajo para ser redirigido al checkout de pago.",
     "subjectSelection.openingCheckout": "Abriendo checkout...",
     "subjectSelection.subscribeNow": "Comprar paquete ahora",
     "subjectSelection.step2Title": "2. Liberar paquete",
     "subjectSelection.step2Description":
-      "Después del pago, verificá si la API ya recibió los eventos de Stripe y liberó tu paquete.",
+      "Después del pago, iniciá sesión y usá la aplicación.",
     "subjectSelection.checking": "Verificando...",
     "subjectSelection.alreadyPaid": "Ya pagué, actualizar acceso",
     "subjectSelection.connectedUser": "Usuario conectado:",
@@ -518,17 +518,17 @@ export const translations = {
     "subjectSelection.pendingBadge": "Pacote pendente",
     "subjectSelection.pendingTitle": "Ative seu pacote para usar a plataforma",
     "subjectSelection.pendingDescription":
-      "Seu login já está liberado. Para usar as rotas protegidas do aplicativo, finalize a compra no Stripe e depois atualize o status do acesso.",
+      "Sua conta já esta pronta. Finalize o pagamento para começar a usar a aplicacão.",
     "subjectSelection.planLabel": "Pacote UBA de 150 perguntas",
     "subjectSelection.planPrice": "Preço: US$20",
     "subjectSelection.step1Title": "1. Concluir pagamento",
     "subjectSelection.step1Description":
-      "Gere a sessão de checkout e compre seu pacote de 150 perguntas com o Stripe.",
+      "Clique no botão abaixo para ser redirecionado ao checkout de pagamento.",
     "subjectSelection.openingCheckout": "Abrindo checkout...",
     "subjectSelection.subscribeNow": "Comprar pacote agora",
     "subjectSelection.step2Title": "2. Liberar pacote",
     "subjectSelection.step2Description":
-      "Depois do pagamento, verifique se a API já recebeu os eventos do Stripe e liberou seu pacote.",
+      "Depois do pagamento, faça login e use a aplicação.",
     "subjectSelection.checking": "Verificando...",
     "subjectSelection.alreadyPaid": "Já paguei, atualizar acesso",
     "subjectSelection.connectedUser": "Usuário conectado:",
