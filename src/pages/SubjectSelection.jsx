@@ -10,7 +10,6 @@ const SubjectSelection = () => {
     getCurrentUserId,
     hasSubscriptionAccess,
     hasQuestionPackageAvailable,
-    refreshSubscriptionAccess,
     logout,
     selectedInstitution,
     setSelectedInstitution,
@@ -18,7 +17,6 @@ const SubjectSelection = () => {
   } = useAppContext();
   const navigate = useNavigate();
   const [isPreparingCheckout, setIsPreparingCheckout] = useState(false);
-  const [isRefreshingAccess, setIsRefreshingAccess] = useState(false);
   const [error, setError] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
 
@@ -75,26 +73,6 @@ const SubjectSelection = () => {
       );
     } finally {
       setIsPreparingCheckout(false);
-    }
-  };
-
-  const handleRefreshAccess = async () => {
-    setIsRefreshingAccess(true);
-    setError("");
-    setInfoMessage("");
-
-    try {
-      const hasAccess = await refreshSubscriptionAccess();
-      if (!hasAccess) {
-        setInfoMessage(t("subjectSelection.paymentPending"));
-      }
-    } catch (requestError) {
-      setError(
-        requestError.response?.data?.detail ||
-          t("subjectSelection.subscriptionStatusFailed"),
-      );
-    } finally {
-      setIsRefreshingAccess(false);
     }
   };
 

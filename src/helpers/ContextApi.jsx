@@ -1,5 +1,4 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { get } from "./FecthApi";
 import {
   DEFAULT_LANGUAGE,
   LANGUAGE_LOCALES,
@@ -8,8 +7,6 @@ import {
 } from "./translations";
 
 const AppContext = createContext();
-
-const DEFAULT_INSTITUTION_NAME = "UBA";
 
 export const resolveLanguage = (language) =>
   SUPPORTED_LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE;
@@ -211,53 +208,6 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  const ensureDefaultInstitution = async () => {
-    if (selectedInstitution) {
-      return selectedInstitution;
-    }
-
-    const response = await get("institutions");
-    const institution =
-      response.data.find((item) => item.name === DEFAULT_INSTITUTION_NAME) || null;
-
-    if (institution) {
-      setSelectedInstitution(institution);
-    }
-
-    return institution;
-  };
-
-  const refreshSubscriptionAccess = async () => {
-    if (!authUser) {
-      setHasSubscriptionAccess(false);
-      return false;
-    }
-
-    if (authUser.global_role === "Admin") {
-      setHasSubscriptionAccess(true);
-      return true;
-    }
-
-    try {
-      const institution = await ensureDefaultInstitution();
-      if (!institution) {
-        setHasSubscriptionAccess(false);
-        return false;
-      }
-
-      await get("questions");
-      setHasSubscriptionAccess(true);
-      return true;
-    } catch (error) {
-      if (error.response?.status === 401 || error.response?.status === 403) {
-        setHasSubscriptionAccess(false);
-        return false;
-      }
-
-      throw error;
-    }
-  };
-
   const login = (user, token, usage = null) => {
     localStorage.setItem("auth_user", JSON.stringify(user));
     if (token) {
@@ -335,7 +285,6 @@ export const AppProvider = ({ children }) => {
     hasSelectedInstitution: Boolean(selectedInstitution),
     hasSubscriptionAccess,
     hasQuestionPackageAvailable,
-    refreshSubscriptionAccess,
     login,
     logout,
     language,
